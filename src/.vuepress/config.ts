@@ -12,7 +12,7 @@ export default defineUserConfig({
 
   theme,
 
-  // 配置 favicon.ico 路径
+  // 配置 favicon.ico 路径d
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }]
   ],
