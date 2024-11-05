@@ -12,7 +12,7 @@ export default defineUserConfig({
 
   // 配置 favicon.ico 路径
   head: [
-    ['link', { rel: 'icon', href: '/favicon.ico' }]
+    ['link', { rel: 'icon', href: '/logo.png' }]
   ],
 
   // 和 PWA 一起启用
