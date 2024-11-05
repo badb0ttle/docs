@@ -6,7 +6,7 @@ title: 博客主页
 heroImage: /pic.gif
 heroText: ✌︎(ツ)ɔ
 heroFullScreen: true
-tagline: 后悔总是贯彻人生始终，不是吗
+tagline:
 projects:
   - icon: project
     name: 项目名称
