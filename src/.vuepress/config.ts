@@ -5,7 +5,7 @@ export default defineUserConfig({
   base: "/docs/",
 
   lang: "zh-CN",
-  title: "Badbottle's bl",
+  title: "Badbottle's blog",
   description: "Blnk is infinite.",
 
   theme,

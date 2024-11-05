@@ -8,7 +8,7 @@ export default hopeTheme({
   hostname: "https://mister-hope.github.io",
 
   author: {
-    name: "Mr.Hope",
+    name: "ℬ𝒶𝒹𝒷0𝓉𝓉𝓁ℯ",
     url: "https://mister-hope.com",
   },
 
@@ -32,7 +32,7 @@ export default hopeTheme({
 
   // 博客相关
   blog: {
-    description: "一个前端开发者",
+    description: "Blnk is infinite",
     intro: "/intro.html",
     medias: {
       Email: "2546744220@qq.com",
@@ -41,7 +41,6 @@ export default hopeTheme({
       Pocket: "https://example.com",
       QQ: "2546744220",
       Steam: "https://example.com",
-      Wechat: "https://example.com",
       VuePressThemeHope: {
         icon: "https://theme-hope-assets.vuejs.press/logo.svg",
         link: "https://theme-hope.vuejs.press",
