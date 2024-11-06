@@ -213,4 +213,4 @@ export default hopeTheme({
     //   plugins: ["highlight", "math", "search", "notes", "zoom"],
     // },
   },
-});
+},{custom: true});
