@@ -9,9 +9,9 @@ export default defineUserConfig({
   lang: "zh-CN",
   title: "Badbottle's blog",
   description: "Blnk is infinite.",
-
+  
   theme,
-
+ 
   // 配置 favicon.ico 路径
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }]
