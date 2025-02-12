@@ -1,7 +1,7 @@
 ---
 home: true
 layout: BlogHome
-icon: home
+icon: /logo.ico
 title: 博客主页
 heroImage: /pic.gif
 heroText: ✌︎(ツ)ɔ
