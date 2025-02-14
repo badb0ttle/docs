@@ -35,16 +35,9 @@ export default hopeTheme({
     description: "Blnk is infinite",
     intro: "/intro.html",
     medias: {
-      Email: "2546744220@qq.com",
-      GitHub: "https://example.com",
-      Gmail: "mailto:info@example.com",
-      Pocket: "https://example.com",
-      QQ: "2546744220",
-      Steam: "https://example.com",
-      VuePressThemeHope: {
-        icon: "https://theme-hope-assets.vuejs.press/logo.svg",
-        link: "https://theme-hope.vuejs.press",
-      },
+      GitHub: "https://github.com/badb0ttle",
+      Steam: "https://steamcommunity.com/profiles/76561198406594357",
+     
     },
   },
 
