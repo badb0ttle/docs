@@ -3,10 +3,11 @@ home: true
 layout: BlogHome
 icon: /logo.ico
 title: 博客主页
-heroImage: /pic.gif
+heroImage: /gogo.gif
 heroText: ✌︎(ツ)ɔ
 heroFullScreen: true
 tagline:
+bgImage: '/assets/images/bg.png'
 projects:
   # - icon: project
   #   name: 项目名称
@@ -40,6 +41,10 @@ projects:
 
 footer: 自定义你的页脚文字
 ---
+
+
+
+
 嘻嘻嘻
 <!-- 
 这是一个博客主页的案例。

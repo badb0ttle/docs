@@ -3,7 +3,6 @@
 console.log("BlogHero.vue");
 import BlogHero from "vuepress-theme-hope/blog/components/BlogHero.js";
 import HitokotoBlogHero from "vuepress-theme-hope/presets/HitokotoBlogHero.js";
-
 </script>
 
 <template>

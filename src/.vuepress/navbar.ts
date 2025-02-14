@@ -4,28 +4,29 @@ export default navbar([
   "/",
   "/demo/",
   {
-    text: "博文",
+    text: "Algorithm",
     icon: "pen-to-square",
     prefix: "/posts/",
     children: [
       {
-        text: "博客小知识",
+        text: "Core",
         icon: "pen-to-square",
         prefix: "apple/",
         children: [
-          { text: "markdown", icon: "pen-to-square", link: "1" },
+          { text: "Main Topics", icon: "pen-to-square", link: "1" },
+          {text: "Mini Topics", icon: "pen-to-square", link: "2"},
           // { text: "苹果2", icon: "pen-to-square", link: "2" },
           // "3",
           // "4",
         ],
       },
       {
-        text: "算法",
+        text: "Templates",
         icon: "pen-to-square",
         prefix: "banana/",
         children: [
           {
-            text: "板子",
+            text: "Algorithm Snippets",
             icon: "pen-to-square",
             link: "1",
           },
@@ -44,9 +45,9 @@ export default navbar([
       // "strawberry",
     ],
   },
-  {
-    text: "V2 文档",
-    icon: "book",
-    link: "https://theme-hope.vuejs.press/zh/",
-  },
+  // {
+  //   text: "V2 文档",
+  //   icon: "book",
+  //   link: "https://theme-hope.vuejs.press/zh/",
+  // },
 ]);

@@ -12,9 +12,9 @@ export default hopeTheme({
     url: "https://mister-hope.com",
   },
 
-  iconAssets: "fontawesome-with-brands",
+  // iconAssets: "fontawesome-with-brands",
 
-  logo: "https://theme-hope-assets.vuejs.press/logo.svg",
+  logo: "/gogo.gif",
 
   repo: "vuepress-theme-hope/vuepress-theme-hope",
 

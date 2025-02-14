@@ -14,7 +14,7 @@ export default defineUserConfig({
  
   // 配置 favicon.ico 路径
   head: [
-    ['link', { rel: 'icon', href: '/favicon.ico' }]
+    ['link', { rel: 'icon', href: 'https://s11.aconvert.com/convert/p3r68-cdx67/flx18-4i3af-001.ico' }]
   ],
 
   // 配置别名
