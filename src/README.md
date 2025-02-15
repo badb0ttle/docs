@@ -2,12 +2,12 @@
 home: true
 layout: BlogHome
 icon: /logo.ico
-title: 博客主页
+title: Journey
 heroImage: /gogo.gif
 heroText: ✌︎(ツ)ɔ
 heroFullScreen: true
 tagline:
-bgImage: '/assets/images/bg.png'
+bgImage: 'https://img3.wallspic.com/crops/8/9/2/4/6/164298/164298-shu_ma_yi_shu-yi_shu-yi_shu_jia-fa_xing-ka_tong-3840x2160.jpg'
 projects:
   # - icon: project
   #   name: 项目名称
