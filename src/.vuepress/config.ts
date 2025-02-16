@@ -10,11 +10,12 @@ export default defineUserConfig({
   title: "Badbottle's blog",
   description: "Blnk is infinite.",
   
+  
   theme,
  
   // 配置 favicon.ico 路径
   head: [
-    ['link', { rel: 'icon', href: 'https://s11.aconvert.com/convert/p3r68-cdx67/flx18-4i3af-001.ico' }]
+    ['link', { rel: 'icon', href: 'assets/icon/logo.ico' }]
   ],
 
   // 配置别名

@@ -1,6 +1,7 @@
 ---
-title: 布局
+title: Layout
 icon: object-group
+cover: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN7L1uhNNwjpXBbqGK5IC5w7BN9WVo-wuyfw&s
 order: 2
 category:
   - 指南

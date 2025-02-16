@@ -1,8 +1,8 @@
 ---
 # 这是文章的标题
-title: 页面配置
+title: Page
 # 你可以自定义封面图片
-cover: /assets/images/cover1.jpg
+cover: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7Gfel-AapoSZTh5Lnp4WWv4lypUWN7wbqZg&s
 # 这是页面的图标
 icon: file
 # 这是侧边栏的顺序
@@ -16,8 +16,7 @@ category:
   - 使用指南
 # 一个页面可以有多个标签
 tag:
-  - 页面配置
-  - 使用指南
+  - 布局
 # 此页面会在文章列表置顶
 sticky: true
 # 此页面会出现在星标文章中
@@ -28,8 +27,8 @@ footer: 这是测试显示的页脚
 copyright: 无版权
 ---
 
-`more` 注释之前的内容被视为文章摘要。
-
+`hehehe`
+<!--`hehehe` 注释之前的内容被视为文章摘要。-->
 <!-- more -->
 
 ## 页面标题
@@ -54,7 +53,33 @@ title: 页面标题
 - 写作日期为 2020 年 1 月 1 日
 - 分类为 “使用指南”
 - 标签为 “页面配置” 和 “使用指南”
-
+你可以通过设置页面的 Frontmatter，在页面禁用功能与布局。
+```markdown
+<!-- 禁用导航栏 -->
+navbar: false 
+<!-- 禁用侧边栏 -->
+sidebar: false 
+<!-- 禁用路径导航 -->
+breadcrumb: false
+<!-- 禁用页面信息 -->
+pageInfo: false
+<!-- 禁用贡献者 -->
+contributors: false
+<!-- 禁用编辑此页链接 -->
+editLink: false
+<!-- 禁用更新时间 -->
+lastUpdated: false
+<!-- 禁用上一篇链接 -->
+prev: false
+<!-- 禁用下一篇链接 -->
+next: false
+<!-- 禁用评论 -->
+comment: false
+<!-- 禁用页脚 -->
+footer: false
+<!-- 禁用返回顶部按钮 -->
+backtotop: false
+ ```
 ## 页面内容
 
 你可以自由在这里书写你的 Markdown。

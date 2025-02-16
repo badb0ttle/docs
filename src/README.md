@@ -2,17 +2,17 @@
 home: true
 layout: BlogHome
 icon: /logo.ico
-title: Journey
+title: Home
 heroImage: /gogo.gif
 heroText: ✌︎(ツ)ɔ
 heroFullScreen: true
 tagline:
-bgImage: 'https://img3.wallspic.com/crops/8/9/2/4/6/164298/164298-shu_ma_yi_shu-yi_shu-yi_shu_jia-fa_xing-ka_tong-3840x2160.jpg'
+bgImage: 'bgImg.png'
 projects:
-  # - icon: project
-  #   name: 项目名称
-  #   desc: 项目详细描述
-  #   link: https://你的项目链接
+   #- icon: project
+   #  name: 项目名称
+    # desc: 项目详细描述
+     #link: https://你的项目链接
 
   # - icon: link
   #   name: 链接名称
@@ -39,7 +39,7 @@ projects:
   #   desc: 自定义详细介绍
   #   link: https://你的自定义链接
 
-footer: 自定义你的页脚文字
+footer: XP
 ---
 
 

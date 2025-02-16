@@ -1,7 +1,7 @@
 ---
-title: 主要功能与配置演示
+title: FED
 index: false
-icon: laptop-code
+icon: 'src/.vuepress/public/assets/icon/pen.ico'
 category:
   - 使用指南
 ---

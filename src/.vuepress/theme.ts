@@ -33,7 +33,7 @@ export default hopeTheme({
   // 博客相关
   blog: {
     description: "Blnk is infinite",
-    intro: "/intro.html",
+    intro: "https://github.com/badb0ttle",
     medias: {
       GitHub: "https://github.com/badb0ttle",
       Steam: "https://steamcommunity.com/profiles/76561198406594357",
@@ -41,12 +41,7 @@ export default hopeTheme({
     },
   },
 
-  // 加密配置
-  encrypt: {
-    config: {
-      "/demo/encrypt.html": ["1234"],
-    },
-  },
+
 
   // 多语言配置
   metaLocales: {
