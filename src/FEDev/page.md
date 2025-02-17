@@ -5,6 +5,7 @@ title: Page
 cover: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7Gfel-AapoSZTh5Lnp4WWv4lypUWN7wbqZg&s
 # 这是页面的图标
 icon: file
+editLink: false
 # 这是侧边栏的顺序
 order: 3
 # 设置作者

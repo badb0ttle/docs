@@ -1,10 +1,10 @@
 ---
 home: true
 layout: BlogHome
-icon: /logo.ico
 title: Home
 heroImage: /gogo.gif
 heroText: ✌︎(ツ)ɔ
+editLink: false
 heroFullScreen: true
 tagline:
 bgImage: 'bgImg.png'

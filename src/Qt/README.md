@@ -1,9 +1,8 @@
 ---
-title: Mod
+title: Qt
 index: false
+editLink: false
 icon: 'src/.vuepress/public/assets/icon/pen.ico'
-category:
-  - 模版
 ---
 
 <Catalog />

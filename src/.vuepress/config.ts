@@ -18,6 +18,7 @@ export default defineUserConfig({
     ['link', { rel: 'icon', href: 'assets/icon/logo.ico' }]
   ],
 
+  
   // 配置别名
   alias: {
     "@theme-hope/modules/blog/components/BlogHero": path.resolve(
@@ -25,7 +26,8 @@ export default defineUserConfig({
       "./components/BlogHero.vue"
     ),
   },
-
+ 
+  
   // 和 PWA 一起启用
   // shouldPrefetch: false,
 });

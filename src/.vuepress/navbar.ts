@@ -4,7 +4,7 @@ export default navbar([
   "/",
   "/FEDev/",
   "/Algorithm/",
-  "/Templates/",
+  "/Qt/",
   // {
   //   text: "Algorithm",
   //   icon: "/assets/icon/home.ico", 

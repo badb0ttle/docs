@@ -4,22 +4,34 @@ export default sidebar({
   "/": [
     "/",
     {
-      text: "如何使用",
+      text: "前后端",
       icon: "laptop-code",
       prefix: "FEDev/",
       link: "FEDev/",
+      collapsible: true,
+      children:["git.md","layout.md","markdown.md","page.md","shell.md","Vue.md"]
     },
     {
       text: "算法",
       icon: "book",
       prefix: "Algorithm/",
       link: "Algorithm/",
+      collapsible: true,
+      "children": [
+        "C.md",
+        "Disc&FT.md",
+        "DP:L&I&T.md",
+        "GA.md",
+        "K-DP.md",
+        "LIS.md",
+        "SA.md",
+        "string.md",]
     },
     {
-      text: "板子",
+      text: "Qt",
       icon: "book",
-      prefix: "Templates/",
-      link: "Templates/",
+      prefix: "Qt/",
+      link: "Qt/",
     },
   ],
 });

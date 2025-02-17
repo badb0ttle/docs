@@ -1,9 +1,8 @@
 ---
 title: ACM
 index: false
+editLink: false
 icon: 'src/.vuepress/public/assets/icon/pen.ico'
-category:
-  - 算法
 ---
 
 <Catalog />

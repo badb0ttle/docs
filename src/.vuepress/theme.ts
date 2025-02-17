@@ -27,7 +27,7 @@ export default hopeTheme({
   sidebar,
 
   // 页脚
-  footer: "默认页脚",
+  footer: "hehehe",
   displayFooter: true,
 
   // 博客相关
@@ -44,10 +44,14 @@ export default hopeTheme({
 
 
   // 多语言配置
-  metaLocales: {
-    editLink: "在 GitHub 上编辑此页",
+  // metaLocales: {
+  //   editLink: "在 GitHub 上编辑此页",
+  // },
+  markdown:{
+    math:{
+      type:"katex",
+    },
   },
-
   // 如果想要实时查看任何改变，启用它。注: 这对更新性能有很大负面影响
   // hotReload: true,
 
@@ -65,20 +69,13 @@ export default hopeTheme({
     components: {
       components: ["Badge", "VPCard"],
     },
-
+   
     // 此处开启了很多功能用于演示，你应仅保留用到的功能。
     markdownImage: {
       figure: true,
       lazyload: true,
       size: true,
     },
-
-    // markdownMath: {
-    //   // 启用前安装 katex
-    //   type: "katex",
-    //   // 或者安装 mathjax-full
-    //   type: "mathjax",
-    // },
 
     // 此功能被开启用于演示，你应仅当使用时保留。
     markdownTab: true,

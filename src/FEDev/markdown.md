@@ -3,6 +3,7 @@ title: Markdown
 icon: fab fa-markdown
 order: 2
 cover: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRfrBDRCWnjgxJSnMfGPndLwXUv1FBOv_H-A&s
+editLink: false
 category:
   - 使用指南
 tag:
