@@ -1,6 +1,6 @@
 ---
 title: Markdown 
-icon: fab fa-markdown
+icon: 'pen'
 order: 2
 cover: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRfrBDRCWnjgxJSnMfGPndLwXUv1FBOv_H-A&s
 editLink: false

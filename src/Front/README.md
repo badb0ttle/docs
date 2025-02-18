@@ -1,7 +1,7 @@
 ---
 title: Front
 index: false
-icon: 'src/.vuepress/public/assets/icon/pen.ico'
+icon: 'code'
 editLink: false
 ---
 

@@ -1,12 +1,12 @@
 import { navbar } from "vuepress-theme-hope";
 
 export default navbar([
-  "/",
-  "/Front/",
-  "/Algorithm/",
-  "/Back/",
-  "/Linux/",
-  "/Other/",
+  { text: "首页", link: "/", icon: "house" },  // fa-solid fa-house
+  { text: "前端", link: "/Front/", icon: "code" },  // fa-solid fa-code
+  { text: "算法", link: "/Algorithm/", icon: "calculator" },  // fa-solid fa-calculator
+  { text: "后端", link: "/Back/", icon: "server" },  // fa-solid fa-server
+  { text: "Linux", link: "/Linux/", icon: "terminal" },  // fa-brands fa-linux
+  { text: "其他", link: "/Other/", icon: "ellipsis" }, 
   // {
   //   text: "Algorithm",
   //   icon: "/assets/icon/home.ico", 

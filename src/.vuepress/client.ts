@@ -2,6 +2,7 @@ import { defineClientConfig } from "vuepress/client";
 import { setupSnowFall } from "vuepress-theme-hope/presets/snowFall.js";
 import { setupRunningTimeFooter } from "vuepress-theme-hope/presets/footerRunningTime.js";
 import { setupTransparentNavbar } from "vuepress-theme-hope/presets/transparentNavbar.js";
+
 export default defineClientConfig({
   setup() {
     setupSnowFall();
