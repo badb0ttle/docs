@@ -2,9 +2,11 @@ import { navbar } from "vuepress-theme-hope";
 
 export default navbar([
   "/",
-  "/FEDev/",
+  "/Front/",
   "/Algorithm/",
-  "/Qt/",
+  "/Back/",
+  "/Linux/",
+  "/Other/",
   // {
   //   text: "Algorithm",
   //   icon: "/assets/icon/home.ico", 

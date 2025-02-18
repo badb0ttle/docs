@@ -4,12 +4,12 @@ export default sidebar({
   "/": [
     "/",
     {
-      text: "前后端",
+      text: "前端",
       icon: "laptop-code",
-      prefix: "FEDev/",
-      link: "FEDev/",
+      prefix: "Front/",
+      link: "Front/",
       collapsible: true,
-      children:["git.md","layout.md","markdown.md","page.md","shell.md","Vue.md"]
+      children:["layout.md","markdown.md","page.md","Vue.md"]
     },
     {
       text: "算法",
@@ -17,7 +17,7 @@ export default sidebar({
       prefix: "Algorithm/",
       link: "Algorithm/",
       collapsible: true,
-      "children": [
+      children: [
         "C.md",
         "Disc&FT.md",
         "DP:L&I&T.md",
@@ -28,10 +28,24 @@ export default sidebar({
         "string.md",]
     },
     {
-      text: "Qt",
+      text: "后端",
       icon: "book",
-      prefix: "Qt/",
-      link: "Qt/",
+      prefix: "Back/",
+      link: "Back/",
+    },
+    {
+      text: "Linux操作系统",
+      icon: "book",
+      prefix: "Linux/",
+      link: "Linux/",
+      children: ["shell.md"]
+    },
+    {
+      text: "其他",
+      icon: "book",
+      prefix: "Other/",
+      link: "Other/",
+      children: ["git.md"]
     },
   ],
 });
