@@ -42,8 +42,8 @@ projects:
 footer: XP
 ---
 
-<VidStack src="/msc.mp3" title="a1" />
-嘻嘻嘻
+
+
 <!-- 
 这是一个博客主页的案例。
 
