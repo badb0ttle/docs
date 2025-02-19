@@ -30,6 +30,14 @@ export default hopeTheme({
   footer: "hehehe",
   displayFooter: true,
 
+  encrypt: {
+    config: {
+      "/M/": {
+        password: ["114514", "221"],
+        hint: "後藤ひとり",
+    },
+  }},
+
   // 博客相关
   blog: {
     description: "Blnk is infinite",
