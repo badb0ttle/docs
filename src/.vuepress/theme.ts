@@ -87,10 +87,12 @@ export default hopeTheme({
     // },
     comment: {
       // 选择一个评论服务
-      provider: "Waline",
-
+      provider: "Giscus",
+      repo:"badb0ttle/docs",
+      repoId:"R_kgDONKD9gg",
+      category:"Announcements",
+      categoryId:"DIC_kwDONKD9gs4CnRBz",
       // 服务选项
-      serverURL: "https://github.com/badb0ttle/docs.git", // your serverURL
     },
     components: {
       components: ["Badge", "VPCard","VidStack"],
