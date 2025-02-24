@@ -1,5 +1,5 @@
 ---
-title: 
+title: ""
 navbar: false 
 sidebar: false 
 breadcrumb: false
