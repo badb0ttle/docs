@@ -85,7 +85,13 @@ export default hopeTheme({
     //   provider: "Waline",
     //   serverURL: "https://waline-comment.vuejs.press",
     // },
+    comment: {
+      // 选择一个评论服务
+      provider: "Waline",
 
+      // 服务选项
+      serverURL: "https://github.com/badb0ttle/docs.git", // your serverURL
+    },
     components: {
       components: ["Badge", "VPCard","VidStack"],
     },

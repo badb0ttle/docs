@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "@vuepress/bundler-webpack": "2.0.0-rc.19",
+    "@vuepress/plugin-comment": "^2.0.0-rc.79",
     "@vuepress/plugin-docsearch": "^2.0.0-rc.74",
     "@vuepress/plugin-search": "^2.0.0-rc.74",
     "@vuepress/plugin-slimsearch": "^2.0.0-rc.74",
