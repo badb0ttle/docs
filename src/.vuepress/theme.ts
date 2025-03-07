@@ -43,6 +43,7 @@ export default hopeTheme({
       type: "katex",
     },
     tasklist: true,
+    imgLazyload: true,
     component: true,
     vPre: true,
     include: true,
