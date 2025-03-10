@@ -6,9 +6,10 @@ cover: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRfrBDRCWnjgxJSnMfG
 editLink: false
 category:
   - 使用指南
-tag:
   - 知识点
+tag:
   - 布局
+  - 语言
 ---
 ## 基础知识
 ```markdown

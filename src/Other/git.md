@@ -5,9 +5,10 @@ cover: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2f_3NlBhNCWlBjiauF
 order: 4
 editLink: false
 category:
+  - 知识点
   - 使用指南
 tag:
-  - 知识点
+  - 控制系统
 
 
 ---

@@ -11,6 +11,9 @@ tag:
 
 ---
 # 
+## 前言
+给学习shell操作的大伙先推荐一下快捷键集合:[快捷键](https://gist.github.com/zhulianhua/befb8f61db8c72b4763d#file-linux-md)
+一边学一边要求自己严格使用快捷键的操作，久而久之自己就习惯使用快捷键的操作了 :)
 # Linux 常用命令
 
 ## 1. 基本命令
@@ -24,7 +27,7 @@ tag:
 2. **列出目录内容**：`ls`
    - `ls -l`: 以长格式显示文件详细信息（权限、所有者、大小等）。
    - `ls -a`: 显示所有文件，包括隐藏文件（以 `.` 开头的文件）。
-   - `ls -h`: 以人类可读的格式显示文件大小（如 KB, MB）。
+   - `ls -h`: 以人类可读的格式显示文件大小（如 KB, MB, GB 等）。
 3. **切换目录**：`cd [路径]`
    - `cd ~`: 切换到当前用户的主目录。
    - `cd ..`: 切换到上一级目录。
@@ -35,7 +38,7 @@ tag:
 5. **删除文件或目录**：`rm [文件夹名]`
    - `rm -r`: 递归删除目录及其内容。
    - `rm -f`: 强制删除，不提示确认。
-   - 示例：`rm -rf ./*` 删除当前目录下所有文件。
+   - 示例：`rm -rf ./*` 删除当前目录下所有文件包括只读文件而不提示确认，因此使用时要**小心**。
   <br>如下图...
   <img src="https://badb0ttle.github.io/picx-images-hosting/root@iZgw075bwgq0gfreepkaoyZhome">
 
@@ -51,7 +54,7 @@ tag:
 5.  **查看文件末尾**：`tail -n [行数] [文件名]`
 6.  **打印字符串到屏幕**：`echo [字符串]`
 7.  **把字符串追加到文件中**：`echo [字符串] >> [文件名]`
-8.  **查询历史命令**：键盘上下键，或命令 `history`。
+8.  **查询历史命令**：键盘上下键，或命令 `history`,如果想清除历史命令，可以使用 `history -c`。
 <img src="https://badb0ttle.github.io/picx-images-hosting/6.新建文件或更新文件时间戳：touch.3k858o61qg.webp">
 
 ### 文件操作
@@ -84,6 +87,7 @@ tag:
 1. **显示进程信息**：`ps`
    - `ps -a`: 显示所有用户进程。
    - `ps -u`: 显示进程所属用户。
+   -  `ps -u <username>` 来显示指定用户的进程
    - `ps -x`: 显示没有控制终端的进程（如守护进程）。
   
 <img src="https://badb0ttle.github.io/picx-images-hosting/2.显示进程信息：ps.6bh7gqtk51.webp">
@@ -95,7 +99,7 @@ tag:
 ### 显示网络连接信息
 
 1. **`netstat` 命令**：显示网络连接信息。
-   - `netstat -n`: 以数字形式显示地址和端口。
+   - `netstat -n`: 以数字形式显示地址和端口而不进行 DNS 解析。
    - `netstat -l`: 显示监听端口。
    - `netstat -t`: 显示 TCP 连接。
    - `netstat -u`: 显示 UDP 连接。
@@ -108,7 +112,9 @@ tag:
      apt install net-tools
      ```
 
-3. **查找进程**：
+3. **查找进程&检查端口&杀死进程**：
    - `ps -aux | grep name`: 查找一个名为 `name` 的进程。
+   - `sudo lsof -i :1234`:监听一个端口号为`1234` 的端口。
+   - `sudo kill -9 PID`:杀死一个进程号为`PID`的进程。
 <img src="https://badb0ttle.github.io/picx-images-hosting/3.显示网络连接信息：netstat.67xlj10ju5.webp">
 
