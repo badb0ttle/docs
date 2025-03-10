@@ -28,7 +28,7 @@
   "dependencies": {
     "@waline/client": "^3.5.5",
     "caniuse-lite": "^1.0.30001700",
-    "plugin-docsearch@latest": "link:vuepress/plugin-docsearch@latest",
+    "@vuepress/plugin-docsearch": "latest",
     "signal-exit": "^4.1.0",
     "update": "^0.7.4"
   },
