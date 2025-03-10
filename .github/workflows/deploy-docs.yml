@@ -33,11 +33,14 @@ jobs:
         uses: pnpm/action-setup@v3
         with:
             run_install: false  # 只安装 pnpm，不自动运行 pnpm install
-        
+      - name: 确保 pnpm 可用
+        run: echo "$HOME/.local/share/pnpm" >> $GITHUB_PATH
         # 安装依赖
       - name: 安装依赖
+        shell: bash
         run: pnpm install
-
+      - name: 检查 pnpm 是否可用
+        run: pnpm --version
       - name: 构建文档
         env:
           NODE_OPTIONS: --max_old_space_size=8192
