@@ -6662,7 +6662,7 @@ snapshots:
 
   '@types/markdown-it-emoji@2.0.5':
     dependencies:
-      '@types/markdown-it': 14.1.2
+      '@types/markdown-it': 13.0.9
 
   '@types/markdown-it-emoji@3.0.1':
     dependencies:
@@ -6708,7 +6708,7 @@ snapshots:
 
   '@types/sax@1.2.7':
     dependencies:
-      '@types/node': 22.13.10
+      '@types/node': 17.0.45
 
   '@types/send@0.17.4':
     dependencies:
