@@ -14,7 +14,7 @@
     "@vuepress/bundler-webpack": "^2.0.0-rc.20",
     "@vuepress/plugin-comment": "2.0.0-rc.79",
     "@vuepress/plugin-docsearch": "2.0.0-rc.82",
-    "@vuepress/plugin-search": "2.0.0-rc.79",
+    "@vuepress/plugin-search": "2.0.0-rc.82",
     "@vuepress/plugin-slimsearch": "2.0.0-rc.79",
     "katex": "^0.16.21",
     "sass-embedded": "^1.83.0",
@@ -26,9 +26,9 @@
     "vuepress-theme-hope": "2.0.0-rc.74"
   },
   "dependencies": {
+    "@vuepress/plugin-docsearch": "latest",
     "@waline/client": "^3.5.5",
     "caniuse-lite": "^1.0.30001700",
-    "@vuepress/plugin-docsearch": "latest",
     "signal-exit": "^4.1.0",
     "update": "^0.7.4"
   },
