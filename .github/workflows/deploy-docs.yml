@@ -25,20 +25,18 @@ jobs:
       - name: 设置 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: pnpm
-
+            node-version: 20
+            cache: pnpm
+        
+        # 使用 pnpm/action-setup 自动安装最新版本的 pnpm
       - name: 安装 pnpm
-        run: npm install -g pnpm
-      
-      - name: 启用 pnpm
-        run: corepack enable
-      
-
+        uses: pnpm/action-setup@v3
+        with:
+            run_install: false  # 只安装 pnpm，不自动运行 pnpm install
+        
+        # 安装依赖
       - name: 安装依赖
-        run: |
-          corepack enable
-          pnpm install
+        run: pnpm install
 
       - name: 构建文档
         env:
