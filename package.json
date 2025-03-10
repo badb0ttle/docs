@@ -15,7 +15,7 @@
     "@vuepress/plugin-comment": "2.0.0-rc.79",
     "@vuepress/plugin-docsearch": "2.0.0-rc.82",
     "@vuepress/plugin-search": "2.0.0-rc.82",
-    "@vuepress/plugin-slimsearch": "2.0.0-rc.79",
+    "@vuepress/plugin-slimsearch": "2.0.0-rc.82",
     "katex": "^0.16.21",
     "sass-embedded": "^1.83.0",
     "sass-loader": "^16.0.4",
