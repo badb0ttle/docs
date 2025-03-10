@@ -28,6 +28,13 @@ jobs:
           node-version: 20
           cache: pnpm
 
+      - name: 安装 pnpm
+        run: npm install -g pnpm
+      
+      - name: 启用 pnpm
+        run: corepack enable
+      
+
       - name: 安装依赖
         run: |
           corepack enable
