@@ -118,3 +118,58 @@ tag:
    - `sudo kill -9 PID`:杀死一个进程号为`PID`的进程。
 <img src="https://badb0ttle.github.io/picx-images-hosting/3.显示网络连接信息：netstat.67xlj10ju5.webp">
 
+## 4.电源管理
+
+# 关机
+立刻关机:<br>
+```
+shutdown -h now 
+ ```
+
+5分钟后关机:<br>
+```
+shutdown -h 5  
+```
+立刻关机:<br>
+```
+poweroff    
+```
+
+# 重启
+```shutdown -r now```  立刻重启
+```shutdown -r 5   ``` 5分钟后重启
+```reboot ```          立刻重启
+
+## 5.解压操作
+命令：```tar [-zxvf] 压缩文件```
+其中：x代表解压<br>
+示例：将/usr/tmp下的ab.tar解压到当前目录下<br>
+# tar -zxvf ab.tar
+显示结果：<br>
+```
+root    0 8月  9 21:17 aa.txt
+root 118 8月  9 21:22 ab.tar
+root    0 8月  9 21:17 bb.txt
+```
+
+## 6.vi编辑器
+
+2) 编辑模式（Insert mode）
+- 文字输入需在此模式下进行，按「ESC」返回命令行模式。
+- 常用命令：ESC（退出编辑模式）
+
+3) 底行模式（last line mode）
+- 功能：保存/退出文件、设置编辑环境（如查找、行号等）。
+- 常用命令：
+  :q     退出编辑
+  :q!    强制退出（不保存）
+  :wq    保存并退出
+  保存文件：
+1. ESC进入命令行模式
+2. 输入「:」进入底行模式
+3. 输入「wq」保存并退出
+
+取消编辑：
+1. ESC进入命令行模式
+2. 输入「:」进入底行模式
+3. 输入「q!」撤销修改并退出
