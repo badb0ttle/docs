@@ -1,5 +1,5 @@
 ---
-title: MST(Minimum Spanning Tree)
+title: Minimum Spanning Tree(最小生成树)
 order: 4
 editLink: false
 category:

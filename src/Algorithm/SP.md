@@ -1,5 +1,5 @@
 ---
-title: SP(Shortest Path)
+title: SP(最短路)
 order: 4
 editLink: false
 category:

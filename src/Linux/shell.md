@@ -96,7 +96,7 @@ tag:
 
 ## 3. 网络管理
 
-### 显示网络连接信息
+### (1)显示网络连接信息
 
 1. **`netstat` 命令**：显示网络连接信息。
    - `netstat -n`: 以数字形式显示地址和端口而不进行 DNS 解析。
@@ -117,6 +117,43 @@ tag:
    - `sudo lsof -i :1234`:监听一个端口号为`1234` 的端口。
    - `sudo kill -9 PID`:杀死一个进程号为`PID`的进程。
 <img src="https://badb0ttle.github.io/picx-images-hosting/3.显示网络连接信息：netstat.67xlj10ju5.webp">
+
+### (2)显示网络ip信息
+
+#### 一、   ifconfig
+查看所有网卡信息
+```bash
+ifconfig x
+```
+x:某一个网卡
+x类型中:en0 通常是 Wi-Fi，en1 是有线网口 
+```bash
+sudo ifconfig x up/down
+```
+启用禁用网卡
+
+
+#### 二、   ipconfig
+```bash
+ipconfig <command> <args>
+```
+Command:<br>
+getifaddr:查看当前 IP 地址<br>
+getoption:查看网关<br>
+```bash
+ipconfig getoption  <interface name | "" > <option name> | <option code>
+```
+
+
+#### 三、   ip
+```bash
+ip addr
+```
+查看所有网络接口
+```bash
+ip route
+```
+查看路由表
 
 ## 4.电源管理
 
