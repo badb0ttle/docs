@@ -100,3 +100,4 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 123456
 ```
+that's all
