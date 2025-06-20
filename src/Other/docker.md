@@ -63,3 +63,40 @@ tag:
 7. `docker pull 仓库名/镜像名`:从仓库中获取镜像,"再通过`docker run`来运行
 8. `docker image ls`查看本地所有镜像
 9.  `docker rmi 镜像名字|id`删除某一个镜像
+# 2.docker-compose基础
+`Docker Compose` 是 Docker 官方提供的多容器应用编排工具，可以通过一个`docker-compose.yml` 文件，定义和管理多个容器服务，使用一条命令即可启动、停止和理整个应用环境。<br>
+我们假设有三台设备：A、B、C。现在要跑一个网站项目，这个网站需要三个部分,
+如果每个人都自己去手动启动、配端口、网络等，容易出错、顺序混乱、版本不一致，A设备可能成功，B和C设备却各种报错。<br>
+而 Docker Compose 就像是一个全自动指挥官，提前把所有容器的镜像、启动命令、端口映射、网络关系，统统写在一个文件里。到时候，只要一条命令<br>
+## 1.安装
+Mac 和 Windows 安装 Docker Desktop 时已集成 Compose，Linux 下可执行：
+```bash
+sudo apt-get install docker-compose
+```
+## 2.基础操作
+(1)指令操作<br>
+`docker compose up`<br>
+启动服务（前台）<br>
+`docker compose up -d`<br>
+启动服务（后台）<br>
+`docker compose down`<br>
+停止并移除容器、网络、挂载<br>
+`docker compose ps`<br>
+查看当前 Compose 服务状态<br>
+`docker compose logs`<br>
+查看服务日志<br>
+`docker compose exec 服务名 bash`<br>
+进入指定服务容器的终端<br>
+(2)配置文件
+Compose 使用 docker-compose.yml 文件定义服务，常见结构如下：
+```yaml
+services:
+  web:
+    image: nginx
+    ports:
+      - "8080:80"
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+```
