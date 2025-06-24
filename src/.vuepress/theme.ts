@@ -36,6 +36,7 @@ export default hopeTheme({
       GitHub: "https://github.com/badb0ttle",
       Steam: "https://steamcommunity.com/profiles/76561198406594357",
     },
+    articleInfo:["Author", "Original", "Date", "PageView", "Category", "Tag", "ReadingTime"],
   },
 
   markdown: {

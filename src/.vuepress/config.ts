@@ -17,7 +17,7 @@ export default defineUserConfig({
   head: [
     ['link', { rel: 'icon', href: 'assets/icon/logo.ico' }]
   ],
-
+  
   
   // 配置别名
   alias: {
