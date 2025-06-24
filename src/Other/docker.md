@@ -54,7 +54,7 @@ tag:
 
 `--volume 或 -v`
 绑定一个卷（挂载存储）。
-
+  
 2. `docker ps`:查看正在运行的容器
 3. `docker stop 容器id|容器名字`:停止正在运行的容器
 4. `docker ps -a`:查看本地的所有容器
