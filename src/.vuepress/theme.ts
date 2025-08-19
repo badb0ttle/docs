@@ -4,15 +4,15 @@ import navbar from "./navbar.js";
 import sidebar from "./sidebar.js";
 
 export default hopeTheme({
-  hostname: "https://mister-hope.github.io",
+  hostname: "https://badb0ttle.github.io",
 
   author: {
     name: "ℬ𝒶𝒹𝒷0𝓉𝓉𝓁ℯ",
-    url: "https://mister-hope.com",
+    url: "https://github.com/badb0ttle",
   },
 
   logo: "/gogo.gif",
-  repo: "vuepress-theme-hope/vuepress-theme-hope",
+  repo: "badb0ttle/docs",
   docsDir: "src",
   navbar,
   sidebar,

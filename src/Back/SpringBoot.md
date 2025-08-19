@@ -8,7 +8,7 @@ category:
   - 知识点
 tag:
   - 控制系统
-date: 2025-07-24
+date: 2025-07-27
 timeline: true
 ---
 # Spring Boot
@@ -103,11 +103,11 @@ public Resolver resolver (){return new Resolver();
 • 导入配置类
 • 导入 ImportSelector 接口实现类
 • @EnableXxxx注解，封装@Import注解
-| 注解 | 说明 |
-| ---- | ---- |
-| @ConditionalOnProperty | 配置文件中存在对应的属性时，才声明该 bean |
+| 注解                      | 说明                                      |
+| ------------------------- | ----------------------------------------- |
+| @ConditionalOnProperty    | 配置文件中存在对应的属性时，才声明该 bean |
 | @ConditionalOnMissingBean | 当不存在当前类型的 bean 时，才声明该 bean |
-| @ConditionalOnClass | 当前环境存在指定的类时，才声明该 bean |
+| @ConditionalOnClass       | 当前环境存在指定的类时，才声明该 bean     |
 ### 自动配置
 遵循约定大约配置的原则，在boot程序启动后，起步依赖中的一些bean对象会自动注入到ioc容器
 ### SpringBoot 自动配置流程（四点总结）
@@ -143,3 +143,107 @@ Spring Validation
 3. 在Controller类上添加@Validated注解
 4. 在全局异常处理器中处理参数校验失败的异常
 
+### 登录接口
+实现参考注册接口，即多了一个验证密码
+#### jwt令牌生成验证
+*注意*
+JWT校验时使用的签名秘钥，必须和生成JWT令牌时使用的秘钥是配套的。
+如果JWT令牌解析校验时报错，则说明JWT令牌`被篡改` 或 `失效了`，令牌非法。
+1. 组成
+• Header（头），记录令牌类型和签名算法等
+• PayLoad（荷载），携带自定义的信息
+• Signature（签名），对头部和荷载进行加密计算得来
+2. 使用
+• 引入java-jwt坐标
+• 调用API生成和校验令牌
+• 解析令牌抛出异常，就证明令牌被篡改或者过期了
+#### 拦截器
+1. 注册 `@Component`,`implements HandlerInterceptor`
+2. config:
+    ```java
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(loginInterceptor).excludePathPatterns("/user/login","/user/register");
+    }
+    ```
+
+### 更新用户信息
+#### RequestBody
+当你前端通过 HTTP 的 PUT（或 POST 等 ）请求发送 JSON 格式数据（像更新用户信息时，传 {"id":594513921,"nickname":"wb","email":"wb@itcast.cn"} 这类 JSON ），@RequestBody 能让 Spring 把请求体（Request Body）里的 JSON 数据，自动转换成对应的 Java 对象（这里就是 User 实体类对象 ）。
+### 令牌主动失效机制
+#### Redis
+详情见Redis文章
+#### 操作
+• 登录成功后，给浏览器响应令牌的同时，把该令牌存储到redis中
+• Loginlnterceptor拦截器中，需要验证浏览器携带的令牌，并同时需要获取到redis中存储的与之相同的令牌
+• 当用户修改密码成功后，删除redis中存储的旧令牌
+### Spring Boot 部署
+#### plugin
+1. 安装依赖  
+
+```
+ <artifactId>spring-boot-maven-plugin</artifactId>
+```
+
+2. 在项目根目录执行：
+```bash
+mvn clean package
+```
+
+3. 运行则:
+
+```bash
+java -jar target/your-project-0.0.1-SNAPSHOT.jar
+```
+#### docker
+1. 安装 Docker 见docker文章[docker](https://badb0ttle.github.io/docs/Other/docker.html)
+2. 在项目根目录下创建 Dockerfile
+```dockerfile
+# 基础镜像（使用官方 OpenJDK）
+FROM openjdk:17-jdk-slim
+
+# 设置工作目录
+WORKDIR /app
+
+# 复制打包好的 JAR 文件
+COPY target/your-project-0.0.1-SNAPSHOT.jar app.jar
+
+# 暴露应用端口（根据你的应用修改）
+EXPOSE 8080
+
+# 启动应用
+CMD ["java", "-jar", "app.jar"]
+```
+3. 构建 Docker 镜像
+在项目根目录下执行（先打包 Maven 项目）：
+```bash
+mvn clean package
+docker build -t your-project:1.0.0 .
+```
+参数说明：
+-t your-project:1.0.0：指定镜像名称和版本。
+.：当前目录（Dockerfile 所在位置）
+4. 运行docker容器
+```bash
+docker run -d -p 8080:8080 your-project:1.0.0
+```
+## 技术
+以下内容详情看[cq章节](https://badb0ttle.github.io/docs/Back/cq.html)
+### Spring Boot 配置
+配置优先级`从上往下递减`
+• 项目中resources目录下的application.yml
+• Jar包所在目录下的application.yml
+• 操作系统环境变量
+• 命令行参数
+### Spring Cache
+`Spring Cache` 是一个框架，实现了基于注解的缓存功能，只需要简单地加一个注解，就能实现缓存功能。
+Spring Cache 提供了一层抽象，底层可以切换不同的缓存实现，例如：
+• EHCache
+• Caffeine
+• Redis
+### Spring Task 介绍
+Spring Task 是Spring框架提供的任务调度工具，可以按照约定的时间自动执行某个代码逻辑。
+### WebSocket 介绍
+WebSocket 是基于TCP 的一种新的网络协议。它实现了浏览器与服务器全双工通信——浏览器和服务器只需要完成一次握手，两者之间就可以创建持久性的连接，并进行双向数据传输。
+### Apache POI 介绍(感觉没啥用)
+Apache POl 是一个处理Miscrosoft Office各种文件格式的开源项目。简单来说就是，我们可以使用POI 在Java 程序中对Miscrosoft Office各种文件进行读写操作。
+一般情况下，POl 都是用于操作 Excel 文件。

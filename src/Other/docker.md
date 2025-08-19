@@ -8,7 +8,7 @@ category:
   - 知识点
 tag:
   - 控制系统
-date: 2025-06-24
+date: 2024-06-24
 timeline: true
 ---
 #
