@@ -1,11 +1,20 @@
 ---
 title: Combination Numbers(组合数)
+icon: calculator
+cover: https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80
 order: 4
 editLink: false
 category:
-    - 算法知识
+    - 算法
 tag:
-    - 知识点
+    - 数学
+    - 组合数学
+    - 基础算法
+author: badbottle
+footer: 基础算法
+copyright: 无版权
+date: 2024-08-24
+timeline: true
 ---
 
 ## 组合数

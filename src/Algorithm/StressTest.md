@@ -5,8 +5,13 @@ cover: https://i-blog.csdnimg.cn/blog_migrate/19df738933c3fc0c1d914666ae9c8166.p
 order: 4
 editLink: false
 category:
-  - 算法知识
+  - 算法
+tag:
+    - 技巧
 date: 2025-07-09
+author: badbottle
+footer: 技巧
+copyright: 无版权
 timeline: true
 ---
 #

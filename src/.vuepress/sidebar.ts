@@ -21,6 +21,8 @@ export default sidebar({
         "C.md",
         "Disc&FT.md",
         "DP:L&I&T.md",
+        "DSU.md",
+        "ExGcd.md",
         "GA.md",
         "K-DP.md",
         "LIS.md",

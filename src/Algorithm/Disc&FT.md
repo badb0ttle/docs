@@ -2,10 +2,13 @@
 title: Discretization & Fenwick Tree Special(离散化和树状数组)
 order: 4
 editLink: false
+author: badbottle
+footer: 基础算法
+copyright: 无版权
 category:
-    - 算法知识
+    - 算法
 tag:
-    - 知识点
+    - 基础算法
 ---
 #
 原文oi wiki:[树状数组](https://oi-wiki.org/ds/fenwick/#%E5%8C%BA%E9%97%B4%E5%8A%A0%E5%8C%BA%E9%97%B4%E5%92%8C) [离散化](https://oi-wiki.org/misc/discrete/)

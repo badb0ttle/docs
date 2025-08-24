@@ -1,11 +1,19 @@
 ---
 title: Manacher(马拉车)
+icon: expand-arrows-alt
+cover: https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80
 order: 4
 editLink: false
+author: badbottle
+footer: 字符串
+copyright: 无版权
 category:
-    - 算法知识
+    - 算法
 tag:
-    - 知识点
+    - 字符串
+    - 回文
+date: 2024-08-24
+timeline: true
 ---
 #
 

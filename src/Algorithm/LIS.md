@@ -1,11 +1,19 @@
 ---
 title: Longest Increasing Subsequence(最长上升子序列）
+icon: chart-line
+cover: https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80
 order: 4
 editLink: false
+author: badbottle
+footer: 基础算法
+copyright: 无版权
 category:
-    - 算法知识
+    - 算法
 tag:
-    - 知识点
+    - 动态规划
+    - 基础算法
+date: 2024-08-24
+timeline: true
 ---
 # 最长上升子序列（Longest Increasing Subsequence，LIS）
 原文oi wiki:[LIS](https://oi-wiki.org/dp/basic/)

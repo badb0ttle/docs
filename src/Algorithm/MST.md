@@ -1,9 +1,19 @@
 ---
 title: Minimum Spanning Tree(最小生成树)
+icon: project-diagram
+cover: https://images.unsplash.com/photo-1569235186275-626cb53b83ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=2012&q=80
 order: 4
 editLink: false
+author: badbottle
+footer: 图论
+copyright: 无版权
 category:
-    - 算法知识
+    - 算法
+tag:
+    - 图论
+    - 最小生成树
+date: 2024-08-24
+timeline: true
 ---
 #
 ## 最小生成树
