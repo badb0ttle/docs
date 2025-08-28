@@ -18,13 +18,17 @@ export default sidebar({
       link: "Algorithm/",
       collapsible: true,
       children: [
+        "BG.md",
         "C.md",
         "Disc&FT.md",
         "DP:L&I&T.md",
         "DSU.md",
         "ExGcd.md",
         "GA.md",
+        "HLD.md",
+        "HM.md",
         "K-DP.md",
+        "LCA.md",
         "LIS.md",
         "Manacher.md",
         "mod.md",
@@ -34,6 +38,7 @@ export default sidebar({
         "SDC.md",
         "SegTree.md",
         "SP.md",
+        "ST.md",
         "StressTest.md",
         "string.md"
       ]

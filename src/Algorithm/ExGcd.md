@@ -4,7 +4,7 @@ icon: square-root-alt
 cover: https://images.unsplash.com/photo-1596495578065-6e0763fa1178?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80
 order: 4
 editLink: false
-author: badbottle
+author: badb0ttle
 date: 2024-08-24
 category:
   - 算法
@@ -16,5 +16,6 @@ timeline: true
 sticky: false
 star: false
 footer: 数论
+copyright: 版权归badb0ttle所有
 ---
 <!-- TODO: 写扩展欧几里得代码 -->

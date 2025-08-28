@@ -10,12 +10,13 @@ category:
   - 算法
 tag:
   - 图论
-  - 数学
+  - 差分约束
 timeline: true
 # 此页面会在文章列表置顶
 sticky: false
 star: false
 footer: 图论
+copyright: 无版权
 ---
 # 差分约束系统
 原文oi wiki:[SDC](https://oi-wiki.org/graph/diff-constraints/)

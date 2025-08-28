@@ -1,19 +1,21 @@
 ---
 title: 二分图BG(Bipartite Graph)
-cover:
-icon: 
+icon: project-diagram
+cover: https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80
 editLink: false
 order: 4
-author: badb0ttle
-date: 2025-8-27
+author: badbottle
+date: 2024-08-24
 category:
-- 算法
+  - 算法
 tag:
-- 图论
+  - 图论
+  - 二分图
+timeline: true
 # 此页面会在文章列表置顶
 sticky: false
 star: false
-footer:
+copyright: 版权归badb0ttle所有
 ---
 # 二分图
 原文oi wiki:[二分图](https://oi-wiki.org/graph/bi-graph/)

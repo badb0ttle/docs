@@ -4,7 +4,7 @@ icon: link
 cover: https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80
 editLink: false
 order: 4
-author: badb0ttle
+author: badbottle
 date: 2024-08-24
 category:
   - 算法
@@ -17,6 +17,7 @@ timeline: true
 sticky: false
 star: false
 footer: 并查集
+copyright: 版权归badb0ttle所有
 ---
 #
 ## 并查集
