@@ -31,6 +31,7 @@ export default sidebar({
         "MST.md",
         "Pr_queue.md",
         "SA.md",
+        "SDC.md",
         "SegTree.md",
         "SP.md",
         "StressTest.md",

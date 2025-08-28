@@ -17,11 +17,11 @@ timeline: true
 ---
 #
 
-原文oi wiki:[马拉车]()
+原文oi wiki:[马拉车](https://oi-wiki.org/string/manacher/)
 
 ## 马拉车
 一种通过在字符串中两两字符的中间添加额外字符实现的一种牺牲空间的算法<br>
-模版：[Manacher](https://github.com/badb0ttle/iomanip/blob/main/SegTree(add).cpp)
+模版：[Manacher](https://github.com/badb0ttle/iomanip/blob/main/Manacher.cpp)
 ### 初始化
 ```cpp
 for(int i=2*n+1;i>=1;--i)

@@ -14,8 +14,10 @@ tag:
 # 背包DP
 原文oi wiki:[背包dp](https://oi-wiki.org/dp/knapsack/)
 ## 1. 01 背包
-
 每个物品只能获取<span style="color:red;">一次</span>。
+### 模版
+[01Knapsack](https://github.com/badb0ttle/iomanip/blob/main/DP(01K).cpp)
+
 
 ### 第一形态
 
@@ -69,8 +71,9 @@ for(int i = 1; i <= m; ++i) {
 这样会导致一个物品被多次选择，违反了 01 背包中“每个物品只能选一次”的规则。
 从右往左遍历可以保证 dp[j - w[i]] 是上一轮的状态（即未选择当前物品时的状态），从而确保每个物品只被选择一次。
 ## 2. 无穷背包
-
 即每个物品有<span style="color:red;">无限</span>次获取的机会。
+### 模版
+[UKnapsack](https://github.com/badb0ttle/iomanip/blob/main/DP(UK).cpp)
 
 ### 第一形态
 
@@ -103,9 +106,9 @@ for(int i = 1; i <= n; ++i) {
 }
 ```
 ## 3. 多重背包
-
 即每个物品都有 s[i] 次获取的机会。
-
+### 模版
+[BoundedKnapsack](https://github.com/badb0ttle/iomanip/blob/main/DP(BK).cpp)
 ### 第一形态
 ```cpp
 for(int i = 1; i <= n; ++i) {

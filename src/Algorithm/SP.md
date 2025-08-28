@@ -57,7 +57,7 @@ Floyd-Warshall 算法用于解决任意两点之间的最短路径问题，`多�
 它通过三重循环，不断尝试以每一个点为中转点更新两点之间的最短距离。
 时间复杂度：`O(n^3)`，适用于`稠密图`、小数据图。
 非常简单易懂，注意遍历的顺序即可
-模版[Floyd](https://github.com/badb0ttle/iomanip/blob/main/floyd.cpp)
+模版[Floyd](https://github.com/badb0ttle/iomanip/blob/main/Floyd.cpp)
 ## Bellman-Ford
 Bellman–Ford 算法是一种基于松弛（relax）操作的最短路算法，可以求出有负权的图的最短路，并可以对最短路不存在的情况进行判断。
 在国内 OI 界，你可能听说过的「SPFA」，就是 Bellman–Ford 算法的一种实现
