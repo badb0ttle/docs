@@ -16,6 +16,5 @@ timeline: true
 sticky: false
 star: false
 footer: 数论
-copyright: 无版权
 ---
 <!-- TODO: 写扩展欧几里得代码 -->

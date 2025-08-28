@@ -14,7 +14,6 @@ tag:
 sticky: false
 star: false
 footer:
-copyright: 无版权
 ---
 # 二分图
 原文oi wiki:[二分图](https://oi-wiki.org/graph/bi-graph/)

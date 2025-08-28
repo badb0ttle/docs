@@ -11,7 +11,6 @@ tag:
 date: 2025-07-09
 author: badbottle
 footer: 技巧
-copyright: 无版权
 timeline: true
 ---
 #

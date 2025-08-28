@@ -15,6 +15,5 @@ tag:
 sticky: false
 star: false
 footer: ST表
-copyright: 无版权
 ---
 <!-- TODO待完成 -->

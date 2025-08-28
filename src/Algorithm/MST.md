@@ -6,7 +6,6 @@ order: 4
 editLink: false
 author: badbottle
 footer: 图论
-copyright: 无版权
 category:
     - 算法
 tag:

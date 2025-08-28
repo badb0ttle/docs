@@ -14,7 +14,6 @@ tag:
 sticky: false
 star: false
 footer:图论
-copyright: 无版权
 ---
 # LCA
 两个节点的最近公共祖先，就是这两个点的公共祖先里面，离根最远的那个。 为了方便，我们记某点集 

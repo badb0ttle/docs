@@ -17,7 +17,6 @@ timeline: true
 sticky: false
 star: false
 footer: 并查集
-copyright: 无版权
 ---
 #
 ## 并查集

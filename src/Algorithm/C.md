@@ -12,7 +12,6 @@ tag:
     - 基础算法
 author: badbottle
 footer: 基础算法
-copyright: 无版权
 date: 2024-08-24
 timeline: true
 ---

@@ -16,7 +16,6 @@ timeline: true
 sticky: false
 star: false
 footer: 图论
-copyright: 无版权
 ---
 # 差分约束系统
 原文oi wiki:[SDC](https://oi-wiki.org/graph/diff-constraints/)

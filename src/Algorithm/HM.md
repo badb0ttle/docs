@@ -15,6 +15,5 @@ tag:
 sticky: false
 star: false
 footer: 启发式合并
-copyright: 无版权
 ---
 <!-- TODO待完成 -->
