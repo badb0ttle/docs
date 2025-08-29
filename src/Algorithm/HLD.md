@@ -51,6 +51,6 @@ second: 第二个 DFS 记录所在链的链顶（top，应初始化为结点本�
 2. **子树**查询，子树修改
 3. **求LCA**
 ### 模版
-[HLD带LCA](https://github.com/badb0ttle/iomanip/blob/main/LCA(HLD).cpp
+[HLD带LCA](https://github.com/badb0ttle/iomanip/blob/main/LCA(HLD).cpp)
 [纯HLD](https://github.com/badb0ttle/iomanip/blob/main/HLD.cpp)
 
