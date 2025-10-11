@@ -1,19 +1,11 @@
 ---
-title: string(字符串基础)
-icon: font
-cover: https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2089&q=80
+title: string(字符串)
 order: 4
 editLink: false
 category:
     - 算法知识
 tag:
-    - 字符串
-    - 基础算法
-author: badbottle
-footer: 字符串
-copyright: 版权归badb0ttle所有
-date: 2024-08-24
-timeline: true
+    - 知识点
 ---
 
 # **字符串基础**
