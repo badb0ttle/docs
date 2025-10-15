@@ -5,12 +5,12 @@ import sidebar from "./sidebar.js";
 
 export default hopeTheme({
   hostname: "https://badb0ttle.github.io",
-
+  darkmode:"auto",
   author: {
     name: "ℬ𝒶𝒹𝒷0𝓉𝓉𝓁ℯ",
     url: "https://github.com/badb0ttle",
   },
-
+  fullscreen: true,
   logo: "/gogo.gif",
   repo: "badb0ttle/docs",
   docsDir: "src",
@@ -18,7 +18,6 @@ export default hopeTheme({
   sidebar,
   footer: "hehehe",
   displayFooter: true,
-
   encrypt: {
     config: {
       "/M/": {
@@ -35,10 +34,10 @@ export default hopeTheme({
     medias: {
       GitHub: "https://github.com/badb0ttle",
       Steam: "https://steamcommunity.com/profiles/76561198406594357",
+      Bilibili:"https://space.bilibili.com/187724779",
     },
     articleInfo:["Author", "Original", "Date", "PageView", "Category", "Tag", "ReadingTime"],
   },
-
   markdown: {
     math: {
       type: "katex",

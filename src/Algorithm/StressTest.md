@@ -19,7 +19,7 @@ timeline: true
 `对拍`是什么呢?<br>
 oi赛制是看不到提交代码是否正确的,所以怎么去判断呢?这个时候我们可以用很暴力的方式来比对。<br>
 现在我们有一道题:输入a,b,输出a+b;我们现在有一个自己的代码:<br>
-```my.cpp
+```cpp
 #include<bits/stdc++.h>
 using namespace std;
 int main()
@@ -32,7 +32,7 @@ int main()
 }
 ```
 我们要检查一下我们的代码是否正确，我们可以用一个复杂度较高但是你确定是100%正确的方法!<br>
-```brute.cpp
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -44,7 +44,7 @@ int main() {
 }
 ```
 现在我们需要一个rand来生成随机数据:<br>
-```rand.cpp
+```cpp
 #include<bits/stdc++.h>
 using namespace std;
 int main()

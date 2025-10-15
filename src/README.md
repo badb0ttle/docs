@@ -1,6 +1,6 @@
 ---
 home: true
-layout: BlogHome
+layout: Blog
 title: Home
 heroImage: /gogo.gif
 heroText: ✌︎(ツ)ɔ
@@ -9,30 +9,25 @@ heroFullScreen: true
 tagline:
 bgImage: 'bgImg.png'
 projects:
-   #- icon: project
-   #  name: 项目名称
-    # desc: 项目详细描述
-     #link: https://你的项目链接
+  - icon: calculator
+    name: ACM
+    desc: ILOVEACMFOREVER
+    link: https://badb0ttle.github.io/docs/Algorithm/
+    
+  - icon: computer
+    name: Linux
+    desc: Linux是世界上最好的操作系统
+    link: https://badb0ttle.github.io/docs/Linux/
 
-  # - icon: link
-  #   name: 链接名称
-  #   desc: 链接详细描述
-  #   link: https://链接地址
+  - icon: server
+    name: BackEnd
+    desc: 要学一辈子后端啊
+    link: https://badb0ttle.github.io/docs/Back/
 
-  # - icon: book
-  #   name: 书籍名称
-  #   desc: 书籍详细描述
-  #   link: https://你的书籍链接
-
-  # - icon: article
-  #   name: 文章名称
-  #   desc: 文章详细描述
-  #   link: https://你的文章链接
-
-  # - icon: friend
-  #   name: 伙伴名称
-  #   desc: 伙伴详细介绍
-  #   link: https://你的伙伴链接
+  - icon: tools
+    name: Other
+    desc: 其他有趣的项目
+    link: https://badb0ttle.github.io/docs/Other/
 
   # - icon: https://theme-hope-assets.vuejs.press/logo.svg
   #   name: 自定义项目

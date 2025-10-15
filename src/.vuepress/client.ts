@@ -2,6 +2,12 @@ import { defineClientConfig } from "vuepress/client";
 import { setupSnowFall } from "vuepress-theme-hope/presets/snowFall.js";
 import { setupRunningTimeFooter } from "vuepress-theme-hope/presets/footerRunningTime.js";
 import { setupTransparentNavbar } from "vuepress-theme-hope/presets/transparentNavbar.js";
+import "vuepress-theme-hope/presets/bounce-icon.scss";
+import "vuepress-theme-hope/presets/shinning-feature-panel.scss";
+import "vuepress-theme-hope/presets/round-blogger-avatar.scss";
+import "vuepress-theme-hope/presets/hr-driving-car.scss";
+
+
 
 export default defineClientConfig({
   setup() {

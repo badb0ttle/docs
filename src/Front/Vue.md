@@ -19,7 +19,7 @@ vue 是一款用于构建用户界面的渐进式的JavaScript框架。
 (E: https://cn.vuejs.org/)
 ## vue基础篇
 ### 环境准备：
-```vue3
+```vue
 npm init vue@latest
 ```
 ### 开发步骤

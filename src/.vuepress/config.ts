@@ -9,16 +9,31 @@ export default defineUserConfig({
   lang: "zh-CN",
   title: "Badbottle's blog",
   description: "Blnk is infinite.",
-  
-  
+
+
   theme,
- 
+
   // 配置 favicon.ico 路径
   head: [
+    //     // <link rel="preconnect" href="https://fonts.googleapis.com">
+    // <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    // <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
+    ["link", { rel: "preconnect", href: "https://fonts.googleapis.com" }],
+    [
+      "link",
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" },
+    ],
+    [
+      "link",
+      {
+        href: "https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Limelight&display=swap",
+        rel: "stylesheet",
+      },
+    ],
     ['link', { rel: 'icon', href: 'assets/icon/logo.ico' }]
   ],
-  
-  
+
+
   // 配置别名
   alias: {
     "@theme-hope/modules/blog/components/BlogHero": path.resolve(
@@ -26,8 +41,8 @@ export default defineUserConfig({
       "./components/BlogHero.vue"
     ),
   },
- 
-  
+
+
   // 和 PWA 一起启用
   // shouldPrefetch: false,
 });

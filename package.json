@@ -1,7 +1,7 @@
 {
   "name": "blog",
   "description": "Blnk is infinite",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -11,28 +11,28 @@
     "docs:update-package": "npx vp-update"
   },
   "devDependencies": {
-    "@vuepress/bundler-webpack": "^2.0.0-rc.20",
-    "@vuepress/plugin-comment": "2.0.0-rc.79",
-    "@vuepress/plugin-docsearch": "2.0.0-rc.82",
-    "@vuepress/plugin-search": "2.0.0-rc.82",
-    "@vuepress/plugin-slimsearch": "2.0.0-rc.82",
-    "katex": "^0.16.21",
-    "sass-embedded": "^1.83.0",
-    "sass-loader": "^16.0.4",
+    "@vuepress/bundler-webpack": "2.0.0-rc.24",
+    "@vuepress/plugin-comment": "2.0.0-rc.112",
+    "@vuepress/plugin-docsearch": "2.0.0-rc.112",
+    "@vuepress/plugin-search": "2.0.0-rc.112",
+    "@vuepress/plugin-slimsearch": "2.0.0-rc.112",
+    "katex": "^0.16.25",
+    "sass-embedded": "^1.93.2",
+    "sass-loader": "^16.0.5",
     "vidstack": "^1.12.13",
-    "vue": "^3.5.13",
-    "vuepress": "2.0.0-rc.20",
-    "vuepress-plugin-md-enhance": "2.0.0-rc.72",
-    "vuepress-theme-hope": "2.0.0-rc.74"
+    "vue": "^3.5.22",
+    "vuepress": "2.0.0-rc.24",
+    "vuepress-plugin-md-enhance": "2.0.0-rc.94",
+    "vuepress-theme-hope": "2.0.0-rc.94"
   },
   "dependencies": {
-    "@vuepress/plugin-docsearch": "latest",
-    "@waline/client": "^3.5.5",
-    "caniuse-lite": "^1.0.30001700",
+    "@vuepress/plugin-docsearch": "2.0.0-rc.112",
+    "@waline/client": "^3.6.0",
+    "caniuse-lite": "^1.0.30001750",
     "signal-exit": "^4.1.0",
     "update": "^0.7.4"
   },
-  "packageManager": "pnpm@10.6.2+sha512.47870716bea1572b53df34ad8647b42962bc790ce2bf4562ba0f643237d7302a3d6a8ecef9e4bdfc01d23af1969aa90485d4cebb0b9638fa5ef1daef656f6c1b",
+  "packageManager": "pnpm@10.18.3+sha512.bbd16e6d7286fd7e01f6b3c0b3c932cda2965c06a908328f74663f10a9aea51f1129eea615134bf992831b009eabe167ecb7008b597f40ff9bc75946aadfb08d",
   "pnpm": {
     "onlyBuiltDependencies": [
       "esbuild",

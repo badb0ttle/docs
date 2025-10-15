@@ -4,7 +4,7 @@ icon: pen
 editLink: false
 order: 4
 author: badb0ttle
-date: 2025-9-17
+date: 2025-09-17
 category:
 - 学科
 tag:
