@@ -23,7 +23,7 @@ export default defineClientConfig({
     setupTransparentNavbar({ type: "homepage" });
     
     // 页面加载完成后添加特效
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined" && typeof navigator !== "undefined") {
       const addEffects = () => {
         // 丝带背景特效 - CSS版本
         const ribbonStyle = document.createElement('style');

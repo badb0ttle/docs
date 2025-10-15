@@ -1,7 +1,7 @@
 <!-- .vuepress/components/BlogHero.vue -->
 <script setup lang="ts">
 console.log("BlogHero.vue");
-import BlogHero from "vuepress-theme-hope/blog/components/BlogHero.js";
+import { Blog as BlogHero } from "vuepress-theme-hope/blog";
 import HitokotoBlogHero from "vuepress-theme-hope/presets/HitokotoBlogHero.js";
 </script>
 
