@@ -9,7 +9,7 @@ export default defineUserConfig({
   lang: "zh-CN",
   title: "Badbottle's blog",
   description: "Blnk is infinite.",
-
+  shouldPrefetch: false,
 
   theme,
 
