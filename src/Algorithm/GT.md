@@ -1,5 +1,5 @@
 ---
-title: GT
+title: GT(博弈论)
 icon: chess
 cover: https://images.unsplash.com/photo-1505678261036-a3fcc5e884ee?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80
 editLink: false
@@ -18,9 +18,8 @@ copyright: 无版权
 ---
 
 # 博弈论 (Game Theory)
-
+原文oi wiki:[博弈论](https://oi-wiki.org/math/game-theory/intro/)
 ## Bash 博弈
-
 Bash 博弈是一种简单的取石子博弈，其规则如下：
 
 - 初始只有一堆石子，数量为 $N$。
@@ -98,6 +97,7 @@ $$b = a_i \oplus x.$$
 (注：以上为标准 Nim 证明与说明，后续可以扩展到 SG 函数与更复杂的博弈合成规则。)
 
 ## SG函数
+[SG函数模板](https://github.com/badb0ttle/iomanip/blob/main/SG.cpp)
 Sprague–Grundy 理论指出，所有公平组合游戏都等价于单堆 Nim 游戏。这一结论主要应用的场景，就是游戏由多个相互独立的子游戏组成的情形。此时，游戏的状态判定可以通过计算子游戏的 SG 函数值的 Nim 和来完成。如果游戏本身没有这样的结构，那么，判定必胜状态和必败状态只需要应用前文博弈图一节的 引理
 SG（sprague - grundy）函数是基于经典 Nim 请弃准广得到的，在Nim博弃中，整个游戏（博弈）的结果是若干个子游戏的异或和，当异或和为 0时局面必败，当异或和不为 0 时局面必胜。
 $sg(X)=mex({sg(y)|x->y})$意思是如果存在x->y,那么图中某个点的sg值是该点所有出点的mex结果。
