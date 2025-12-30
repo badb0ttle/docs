@@ -1,4 +1,4 @@
 User-agent:*
 Disallow:
 
-Sitemap: https://badb0ttle.github.io/docs/sitemap.xml
+Sitemap: https://badb0ttle.github.io/sitemap.xml
