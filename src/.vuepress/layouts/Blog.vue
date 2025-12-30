@@ -6,7 +6,9 @@ import HitokotoBlogHero from "vuepress-theme-hope/presets/HitokotoBlogHero.js";
 <template>
   <Blog>
     <template #heroInfo="data">
-      <HitokotoBlogHero v-bind="data" />
+      <ClientOnly>
+        <HitokotoBlogHero v-bind="data" />
+      </ClientOnly>
     </template>
   </Blog>
 </template>
