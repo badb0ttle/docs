@@ -1,4 +1,5 @@
 import { defineUserConfig } from "vuepress";
+import { webpackBundler } from "@vuepress/bundler-webpack";
 import { getDirname, path } from "vuepress/utils";
 import theme from "./theme.js";
 
@@ -34,15 +35,14 @@ export default defineUserConfig({
   ],
 
 
-  // 配置别名
-  alias: {
-    "@theme-hope/modules/blog/components/BlogHero": path.resolve(
-      __dirname,
-      "./components/BlogHero.vue"
-    ),
-  },
-
-
   // 和 PWA 一起启用
   // shouldPrefetch: false,
+
+  bundler: webpackBundler({
+    scss: {
+      sassOptions: {
+        silenceDeprecations: ["import", "legacy-js-api"],
+      },
+    },
+  }),
 });
