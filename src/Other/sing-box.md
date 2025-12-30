@@ -44,7 +44,7 @@ WantedBy=multi-user.target
 ```
 
 
-2.	让 systemd 重新加载配置并启用服务：
+3.	让 systemd 重新加载配置并启用服务：
 ```bash
 sudo systemctl daemon-reload
 sudo systemctl enable sing-box
@@ -52,11 +52,11 @@ sudo systemctl start sing-box
 ```
 
 
-👉 这一步解决的是：“systemd 里没有 sing-box 这个服务”。
+这一步解决的是：“systemd 里没有 sing-box 这个服务”。
 
 ⸻
 
-3. 配置文件路径 / 权限 / 不存在
+4. 配置文件路径 / 权限 / 不存在
 
 日志里一度出现：
 
@@ -75,7 +75,7 @@ sudo vim /usr/local/etc/sing-box/config.json
 
 ⸻
 
-4. 老版本配置特性导致 sing-box 启动崩溃
+5. 老版本配置特性导致 sing-box 启动崩溃
 
 你中途用的是一些“带规则 / 分流 / DNS / rule-set”的配置，日志出现过这些 FATAL：
 		legacy special outbounds is deprecated...
@@ -101,7 +101,7 @@ journalctl -u sing-box -n 20 --no-pager
 
 ⸻
 
-5. trojan 节点连接失败
+6. trojan 节点连接失败
 
 后来日志里是这样：
 
@@ -121,7 +121,7 @@ dial tcp 199.180.115.155:9443: connect: connection refused
 
 ⸻
 
-6. 订阅 + sub converter 折腾无果
+7. 订阅 + sub converter 折腾无果
 
 你尝试用：
 
@@ -145,7 +145,7 @@ The following link doesn't contain any valid node info
 
 ⸻
 
-7. 从 Clash YAML 手工转成 sing-box JSON
+8. 从 Clash YAML 手工转成 sing-box JSON
 
 你给了这段开头（后面内容很长）：
 ```bash
@@ -205,7 +205,7 @@ INFO sing-box started
 
 ⸻
 
-8. 使用 curl 实测代理完全可用
+9. 使用 curl 实测代理完全可用
 
 最后用最硬的验证方式：
 
