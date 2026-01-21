@@ -1,5 +1,5 @@
 ---
-title: Front
+title: Frontend
 index: false
 icon: 'code'
 editLink: false

@@ -1,8 +1,8 @@
 ---
-title: Other
+title: Tools
 index: false
+icon: 'tools'
 editLink: false
-icon: 'ellipsis'
 ---
 
 <Catalog />

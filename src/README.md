@@ -10,29 +10,44 @@ tagline:
 bgImage: 'bgImg.png'
 projects:
   - icon: calculator
-    name: ACM
-    desc: ILOVEACMFOREVER
-    link: https://badb0ttle.github.io/docs/Algorithm/
+    name: Algorithm
+    desc: Algorithm & Data Structure
+    link: /Algorithm/
     
-  - icon: computer
-    name: Linux
-    desc: Linux是世界上最好的操作系统
-    link: https://badb0ttle.github.io/docs/Linux/
-
   - icon: server
-    name: BackEnd
-    desc: 要学一辈子后端啊
-    link: https://badb0ttle.github.io/docs/Back/
+    name: Backend
+    desc: Java, SpringBoot, Architecture
+    link: /Backend/
+
+  - icon: code
+    name: Frontend
+    desc: Vue, React, Web
+    link: /Frontend/
+
+  - icon: database
+    name: Database
+    desc: MySQL, Redis, Storage
+    link: /Database/
+
+  - icon: linux
+    name: DevOps
+    desc: Docker, Network, Deploy
+    link: /DevOps/
+
+  - icon: code
+    name: Languages
+    desc: Shell, Python, Go
+    link: /Languages/
+
+  - icon: terminal
+    name: Linux
+    desc: System & Commands
+    link: /Linux/
 
   - icon: tools
-    name: Other
-    desc: 其他有趣的项目
-    link: https://badb0ttle.github.io/docs/Other/
-
-  # - icon: https://theme-hope-assets.vuejs.press/logo.svg
-  #   name: 自定义项目
-  #   desc: 自定义详细介绍
-  #   link: https://你的自定义链接
+    name: Tools
+    desc: Efficiency & Utilities
+    link: /Tools/
 
 footer: XP
 ---

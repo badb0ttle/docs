@@ -1,8 +1,8 @@
 ---
-title: Back
+title: Database
 index: false
+icon: 'database'
 editLink: false
-icon: 'server'
 ---
 
 <Catalog />

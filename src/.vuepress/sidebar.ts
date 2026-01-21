@@ -2,74 +2,70 @@ import { sidebar } from "vuepress-theme-hope";
 
 export default sidebar({
   "/": [
-    "/",
-    {
-      text: "前端",
-      icon: "laptop-code",
-      prefix: "Front/",
-      link: "Front/",
-      collapsible: true,
-      children:["layout.md","page.md","Vue.md"]
-    },
+    "",
     {
       text: "算法",
       icon: "calculator",
       prefix: "Algorithm/",
       link: "Algorithm/",
       collapsible: true,
-      children: [
-        "BG.md",
-        "C.md",
-        "Disc&FT.md",
-        "DP:L&I&T.md",
-        "DSU.md",
-        "ExGcd.md",
-        "GA.md",
-        "HLD.md",
-        "HM.md",
-        "K-DP.md",
-        "LCA.md",
-        "LIS.md",
-        "Manacher.md",
-        "mod.md",
-        "MST.md",
-        "Pr_queue.md",
-        "SA.md",
-        "SDC.md",
-        "SegTree.md",
-        "SP.md",
-        "ST.md",
-        "StressTest.md",
-        "string.md"
-      ]
+      children: "structure",
     },
     {
       text: "后端",
       icon: "server",
-      prefix: "Back/",
-      link: "Back/",
+      prefix: "Backend/",
+      link: "Backend/",
       collapsible: true,
-      children: [
-        "SpringBoot.md",
-        "MyBatis-Plus.md",
-        "cq.md"
-      ]
+      children: "structure",
     },
     {
-      text: "Linux操作系统",
+      text: "前端",
+      icon: "laptop-code",
+      prefix: "Frontend/",
+      link: "Frontend/",
+      collapsible: true,
+      children: "structure",
+    },
+    {
+      text: "数据库",
+      icon: "database",
+      prefix: "Database/",
+      link: "Database/",
+      collapsible: true,
+      children: "structure",
+    },
+    {
+      text: "运维 & 部署",
+      icon: "linux",
+      prefix: "DevOps/",
+      link: "DevOps/",
+      collapsible: true,
+      children: "structure",
+    },
+    {
+      text: "Linux",
       icon: "terminal",
       prefix: "Linux/",
       link: "Linux/",
       collapsible: true,
-      children: ["FixIssue.md", "hbase.md", "nmcli.md", "shell.md", "vim.md"]
+      children: "structure",
     },
     {
-      text: "其他",
-      icon: "ellipsis",
-      prefix: "Other/",
-      link: "Other/",
+      text: "编程语言",
+      icon: "code",
+      prefix: "Languages/",
+      link: "Languages/",
       collapsible: true,
-      children: ["docker.md", "git.md", "markdown.md", "qt.md", "redis.md"]
+      children: "structure",
+    },
+    {
+      text: "工具",
+      icon: "tools",
+      prefix: "Tools/",
+      link: "Tools/",
+      collapsible: true,
+      children: "structure",
     },
   ],
 });
