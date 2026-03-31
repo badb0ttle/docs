@@ -82,6 +82,7 @@ export default hopeTheme({
     slimsearch: {
       indexContent: true,
       suggestion: true,
+      worker: "slimsearch.worker.v2.js",
       customFields: [
         {
           getter: (page) => page.frontmatter.title,
