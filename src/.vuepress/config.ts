@@ -1,5 +1,5 @@
 import { defineUserConfig } from "vuepress";
-import { webpackBundler } from "@vuepress/bundler-webpack";
+import { viteBundler } from "@vuepress/bundler-vite";
 import { getDirname } from "vuepress/utils";
 import theme from "./theme.js";
 
@@ -38,24 +38,5 @@ export default defineUserConfig({
   // 和 PWA 一起启用
   // shouldPrefetch: false,
 
-  bundler: webpackBundler({
-    configureWebpack: () => ({
-      ignoreWarnings: [
-        (warning) =>
-          typeof warning.message === "string" &&
-          warning.message.includes("The Sass if() syntax is deprecated") &&
-          warning.message.includes("vuepress-theme-hope/lib/client/styles/_code.scss"),
-        (warning) =>
-          typeof warning.message === "string" &&
-          warning.message.includes("The Sass if() syntax is deprecated") &&
-          warning.message.includes("vuepress-shared/styles/svg.scss"),
-      ],
-    }),
-    scss: {
-      sassOptions: {
-        quietDeps: true,
-        silenceDeprecations: ["if-function", "import", "legacy-js-api"],
-      },
-    },
-  }),
+  bundler: viteBundler({}),
 });
