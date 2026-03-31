@@ -57,14 +57,6 @@ export default defineUserConfig({
           warning.message.includes("The Sass if() syntax is deprecated") &&
           warning.message.includes("vuepress-shared/styles/svg.scss"),
       ],
-    }),
-    scss: {
-      sassOptions: {
-        quietDeps: true,
-        silenceDeprecations: ["if-function", "import", "legacy-js-api"],
-      },
-    },
-    configureWebpack: () => ({
       resolve: {
         alias: {
           // plugin-slimsearch on the current dependency set resolves `worker.js`
@@ -73,5 +65,11 @@ export default defineUserConfig({
         },
       },
     }),
+    scss: {
+      sassOptions: {
+        quietDeps: true,
+        silenceDeprecations: ["if-function", "import", "legacy-js-api"],
+      },
+    },
   }),
 });
