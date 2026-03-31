@@ -46,9 +46,22 @@ export default defineUserConfig({
   // shouldPrefetch: false,
 
   bundler: webpackBundler({
+    configureWebpack: () => ({
+      ignoreWarnings: [
+        (warning) =>
+          typeof warning.message === "string" &&
+          warning.message.includes("The Sass if() syntax is deprecated") &&
+          warning.message.includes("vuepress-theme-hope/lib/client/styles/_code.scss"),
+        (warning) =>
+          typeof warning.message === "string" &&
+          warning.message.includes("The Sass if() syntax is deprecated") &&
+          warning.message.includes("vuepress-shared/styles/svg.scss"),
+      ],
+    }),
     scss: {
       sassOptions: {
-        silenceDeprecations: ["import", "legacy-js-api"],
+        quietDeps: true,
+        silenceDeprecations: ["if-function", "import", "legacy-js-api"],
       },
     },
     configureWebpack: () => ({
