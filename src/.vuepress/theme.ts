@@ -14,6 +14,8 @@ export default hopeTheme({
   logo: "/gogo.gif",
   repo: "badb0ttle/docs",
   docsDir: "src",
+  lastUpdated: false,
+  contributors: false,
   navbar,
   sidebar,
   footer: "hehehe",

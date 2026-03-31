@@ -1,16 +1,9 @@
 import { defineUserConfig } from "vuepress";
 import { webpackBundler } from "@vuepress/bundler-webpack";
 import { getDirname, path } from "vuepress/utils";
-import { createRequire } from "node:module";
 import theme from "./theme.js";
 
 const __dirname = getDirname(import.meta.url);
-const require = createRequire(import.meta.url);
-const slimsearchPkgPath = require.resolve("@vuepress/plugin-slimsearch/package.json");
-const slimsearchWorkerPath = path.join(
-  path.dirname(slimsearchPkgPath),
-  "dist/client/worker.js",
-);
 
 export default defineUserConfig({
   base: "/",
@@ -46,19 +39,23 @@ export default defineUserConfig({
   // shouldPrefetch: false,
 
   bundler: webpackBundler({
+    configureWebpack: () => ({
+      ignoreWarnings: [
+        (warning) =>
+          typeof warning.message === "string" &&
+          warning.message.includes("The Sass if() syntax is deprecated") &&
+          warning.message.includes("vuepress-theme-hope/lib/client/styles/_code.scss"),
+        (warning) =>
+          typeof warning.message === "string" &&
+          warning.message.includes("The Sass if() syntax is deprecated") &&
+          warning.message.includes("vuepress-shared/styles/svg.scss"),
+      ],
+    }),
     scss: {
       sassOptions: {
-        silenceDeprecations: ["import", "legacy-js-api"],
+        quietDeps: true,
+        silenceDeprecations: ["if-function", "import", "legacy-js-api"],
       },
     },
-    configureWebpack: () => ({
-      resolve: {
-        alias: {
-          // plugin-slimsearch on the current dependency set resolves `worker.js`
-          // from the package root, but the emitted file lives in `dist/client`.
-          "worker.js$": slimsearchWorkerPath,
-        },
-      },
-    }),
   }),
 });
