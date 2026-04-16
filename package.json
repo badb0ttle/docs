@@ -5,10 +5,11 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "docs:build": "vuepress build src && node scripts/fix-slimsearch-worker.mjs",
+    "docs:build": "node scripts/fix-vuepress-theme-hope-sourcemap.mjs && vuepress build src && node scripts/fix-slimsearch-worker.mjs",
     "docs:clean-dev": "vuepress dev src --clean-cache",
-    "docs:dev": "vuepress dev src",
-    "docs:update-package": "npx vp-update"
+    "docs:dev": "node scripts/fix-vuepress-theme-hope-sourcemap.mjs && vuepress dev src",
+    "docs:update-package": "npx vp-update",
+    "postinstall": "node scripts/fix-vuepress-theme-hope-sourcemap.mjs"
   },
   "devDependencies": {
     "@vuepress/bundler-vite": "2.0.0-rc.28",
@@ -16,7 +17,7 @@
     "@vuepress/plugin-docsearch": "2.0.0-rc.128",
     "@vuepress/plugin-search": "2.0.0-rc.128",
     "@vuepress/plugin-slimsearch": "2.0.0-rc.129",
-    "katex": "^0.16.44",
+    "katex": "^0.16.45",
     "sass-embedded": "^1.99.0",
     "vidstack": "^1.12.13",
     "vue": "^3.5.32",
@@ -26,7 +27,7 @@
   },
   "dependencies": {
     "@waline/client": "^3.13.0",
-    "caniuse-lite": "^1.0.30001784",
+    "caniuse-lite": "^1.0.30001788",
     "signal-exit": "^4.1.0",
     "update": "^0.7.4"
   },

@@ -4,6 +4,7 @@ icon: code
 cover: https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80
 order: 4
 editLink: false
+star: true
 author: badbottle
 footer: 模版
 copyright: 版权归badb0ttle所有

@@ -3,6 +3,7 @@ title: Shell
 icon: gears
 order: 4
 editLink: false
+star: true
 category:
   - 使用指南
 tag:
