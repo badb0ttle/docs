@@ -9,6 +9,7 @@ export default navbar([
   { text: "运维", link: "/DevOps/", icon: "linux" },
   { text: "语言", link: "/Languages/", icon: "code" },
   { text: "工具", link: "/Tools/", icon: "tools" },
+  { text: "AI", link: "/AI/", icon: "robot" },
   { text: "Linux", link: "/Linux/", icon: "terminal" },
   { text: "更新日志", link: "/timeline/", icon: "history" },
   { text: "???", link: "/M/", icon: "question" },

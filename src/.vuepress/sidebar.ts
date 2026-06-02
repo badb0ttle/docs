@@ -60,6 +60,14 @@ export default sidebar({
       children: "structure",
     },
     {
+      text: "AI",
+      icon: "robot",
+      prefix: "AI/",
+      link: "AI/",
+      collapsible: true,
+      children: "structure",
+    },
+    {
       text: "工具",
       icon: "tools",
       prefix: "Tools/",
