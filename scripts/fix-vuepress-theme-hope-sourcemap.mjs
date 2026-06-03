@@ -1,8 +1,9 @@
-import { readdir, readFile, stat, writeFile } from "node:fs/promises";
+import { readdir, readFile, realpath, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const THEME_DIST_DIR = path.resolve(
-  "node_modules/.pnpm/vuepress-theme-hope@2.0.0-rc.106_816323ec6f49fa88d1f73f8eb1d36af1/node_modules/vuepress-theme-hope/dist",
+  await realpath("node_modules/vuepress-theme-hope"),
+  "dist",
 );
 
 const walk = async (dir) => {
