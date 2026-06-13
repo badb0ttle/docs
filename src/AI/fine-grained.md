@@ -11,7 +11,7 @@ tag:
   - Pipeline
   - SQLite
   - GitHub Pages
-date: 2026-06-02
+date: 2026-06-13
 timeline: true
 ---
 
@@ -29,13 +29,13 @@ timeline: true
 
 | 层 | 技术 |
 |----|------|
-| 采集 | Python + feedparser + requests (15 RSS 源) |
+| 前端 | React 19 + Vite + Tailwind CSS v4 + Recharts + React Router v7 |
+| 采集 | Python + feedparser + requests (16 RSS 源) |
 | 存储 | SQLite + FTS5 全文索引 |
 | Pipeline | 5 阶段：scanner → dedup → scorer → curator → publisher |
-| 精选 | LLM (cron job) — 中文标题 + 摘要 + Why it matters |
-| 前端 | 原生 JS + Chart.js (SPA + 仪表盘) |
-| 部署 | GitHub Pages + 自定义域名 ai.hjhai.xyz |
-| 调度 | Hermes Agent Cron (每日 8:00) |
+| 精选 | LLM (DeepSeek V4) — 中文标题 + 摘要 + Why it matters |
+| 部署 | 阿里云 ECS (pipeline) + GitHub Pages (前端) + 本地 Mac (Telegram 分发) |
+| 调度 | Hermes Agent Cron (日扫 8:00 · 增量 30min · 周报 周日 10:00) |
 
 ## 数据源
 
@@ -54,7 +54,7 @@ timeline: true
 - [x] Scanner 重试机制 (2 次重试 + 指数退避)
 - [x] 每日 8:00 cron 自动运行
 
-**数据状态**: 268 篇文章 · 15 信源 · 评分均分 51.3 (最高 84.6)
+**数据状态**: 896 篇文章 · 16 信源 · 评分均分 51.3 (最高 84.6)
 
 ## Phase 2: 内容深度 ✅ (2026-06-02)
 
@@ -116,6 +116,42 @@ timeline: true
 
 **新增模块**: `telegram_digest.py` (每日/每周 Telegram 摘要生成)
 **Cron 更新**: 每日扫描 +1 步 (Step 7)，每周简报 +1 步 (Step 5)
+
+## Phase 7: React 前端重构 ✅ (2026-06-05)
+
+- [x] React 19 + Vite + TypeScript — `frontend/` 子目录，组件化架构
+- [x] Tailwind CSS v4 — 暗色 OLED 主题，响应式布局
+- [x] Recharts 替代 Chart.js — 声明式图表组件，数据驱动渲染
+- [x] React Router v7 — SPA 路由（/dashboard /leaderboard /timeline /clusters /weekly）
+- [x] 6 页面组件 — HomePage、DashboardPage、LeaderboardPage、TimelinePage、ClustersPage、WeeklyPage
+- [x] FontAwesome 图标 — 统一 `@fortawesome/free-solid-svg-icons`，零 emoji
+- [x] Canvas 交互式聚类散点图 — hover 详情 / 点击跳转 / 聚簇筛选
+- [x] PWA — Service Worker 缓存 + manifest.json，可添加到主屏幕
+- [x] 构建产物输出到 `docs/`，与 GitHub Pages 无缝部署
+
+**新增**: `frontend/` 目录（React 源码）· React 组件 6 页 · TypeScript 类型严格
+**移除**: 原生 JS HTML 页面 + Chart.js 依赖
+
+## Phase 8: 增量扫描 & 混合部署 ✅ (2026-06-12)
+
+- [x] 零 token 增量扫描 — `cron_scanner.py` 纯 Python (scanner → dedup → scorer)，不调用 LLM
+- [x] 每 30 分钟自动运行 — Hermes cron `no_agent` 模式，静默输出，65s 完成
+- [x] 混合部署架构 — 阿里云 ECS 跑 pipeline + 推 GitHub，本地 Mac 负责 Telegram 投递
+- [x] Sing-box 代理 — 解决国内服务器访问 DeepSeek API 的网络问题
+- [x] Systemd 服务管理 — `hermes-gateway.service` + proxy drop-in，持久化运行
+- [x] 成本优化 — LLM 调用从每 30 分钟降至每日 1 次，月 token 消耗降低 90%+
+
+**新增模块**: `scripts/cron_scanner.py` (零 token 扫描)
+**架构变化**: 单机 → 混合部署（ECS + Mac + GitHub Pages）
+**Cron 新增**: `2237be30eb2b` (增量扫描，每 30 分钟)
+
+## 当前数据 (2026-06-13)
+
+- 📄 896 篇索引文章
+- 📡 16 个 RSS 信源 (13 个稳定)
+- 🏷️ 5 个话题聚类
+- 🏆 模型排行榜持续更新
+- 📅 每日精选 Top 10 + 每周深度简报
 
 ## 本地运行
 
