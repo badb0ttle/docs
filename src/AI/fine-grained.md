@@ -127,31 +127,36 @@ timeline: true
 - [x] FontAwesome 图标 — 统一 `@fortawesome/free-solid-svg-icons`，零 emoji
 - [x] Canvas 交互式聚类散点图 — hover 详情 / 点击跳转 / 聚簇筛选
 - [x] PWA — Service Worker 缓存 + manifest.json，可添加到主屏幕
-- [x] 构建产物输出到 `docs/`，与 GitHub Pages 无缝部署
 
 **新增**: `frontend/` 目录（React 源码）· React 组件 6 页 · TypeScript 类型严格
 **移除**: 原生 JS HTML 页面 + Chart.js 依赖
 
 ## Phase 8: 增量扫描 & 混合部署 ✅ (2026-06-12)
 
-- [x] 零 token 增量扫描 — `cron_scanner.py` 纯 Python (scanner → dedup → scorer)，不调用 LLM
-- [x] 每 30 分钟自动运行 — Hermes cron `no_agent` 模式，静默输出，65s 完成
-- [x] 混合部署架构 — 阿里云 ECS 跑 pipeline + 推 GitHub，本地 Mac 负责 Telegram 投递
-- [x] Sing-box 代理 — 解决国内服务器访问 DeepSeek API 的网络问题
-- [x] Systemd 服务管理 — `hermes-gateway.service` + proxy drop-in，持久化运行
+- [x] 零 token 增量扫描 — `cron_scanner.py` 纯 Python，不调用 LLM
+- [x] 混合部署架构 — 阿里云 ECS 跑 pipeline，本地 Mac 负责 Telegram 投递
 - [x] 成本优化 — LLM 调用从每 30 分钟降至每日 1 次，月 token 消耗降低 90%+
 
-**新增模块**: `scripts/cron_scanner.py` (零 token 扫描)
-**架构变化**: 单机 → 混合部署（ECS + Mac + GitHub Pages）
-**Cron 新增**: `2237be30eb2b` (增量扫描，每 30 分钟)
+## Phase 9: 中英双语 & 模型排行榜 & SEO ✅ (2026-06-13)
+
+- [x] 中英双语支持 — `/en/*` 路径前缀 + `LocaleContext`，全站 UI 双语化，英文周报自动生成
+- [x] 模型排行榜升级 — 接入 OpenRouter API 追踪 300+ 模型，Artificial Analysis + Design Arena 双维度评分
+- [x] SEO 深度优化 — JSON-LD 结构化数据（WebSite / Organization / ItemList / NewsArticle / BreadcrumbList）
+- [x] hreflang 多语言标签 — Google 正确索引中英文版本
+- [x] RSS + Sitemap 自动生成 — 提交 Google Search Console
+- [x] Umami 隐私分析 — 流量追踪，无 Cookie
+
+**新增**: `useJsonLd.ts` (结构化数据注入) · `model_leaderboard.py` (OpenRouter) · `rss_feed.py` / `sitemap_gen.py`
+**Cron**: 4 个自动化任务（日扫描 + 日推送 + 周简报 + 周推送）
 
 ## 当前数据 (2026-06-13)
 
-- 📄 896 篇索引文章
-- 📡 16 个 RSS 信源 (13 个稳定)
-- 🏷️ 5 个话题聚类
-- 🏆 模型排行榜持续更新
-- 📅 每日精选 Top 10 + 每周深度简报
+- 📄 900+ 篇索引文章
+- 📡 15+ 个 RSS 信源
+- 🏷️ 8 个话题聚类
+- 🏆 300+ 模型排行榜（OpenRouter）
+- 🌐 中英双语 · SEO 全优化
+- 📅 每日精选 Top 10 + 每周中英简报
 
 ## 本地运行
 
