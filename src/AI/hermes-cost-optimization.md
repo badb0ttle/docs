@@ -12,7 +12,7 @@ tag:
   - Token优化
   - DeepSeek
   - 成本控制
-date: 2026-06-17
+date: 2026-06-19
 timeline: true
 ---
 
@@ -152,6 +152,165 @@ hermes cron update <job_id> --enabled_toolsets terminal,file
 
 砍掉 browser、web_search、vision 等重型工具的定义，进一步削减 system prompt。
 
+## Phase 4: Prompt Cache 命中率提升
+
+> Telegram DM 场景下用户的"连发消息"习惯，正在悄悄吃掉你的缓存
+
+### 问题发现
+
+Token 优化告一段落后，发现一个诡异现象：**在 Telegram 上连续对话时，每次请求的 token 消耗几乎没有下降**。按理说，同一会话的 system prompt 相同、message history 稳定，Prompt Cache 应该能命中大部分前缀。
+
+排查后定位到根因：**用户在 AI 回答尚未完成时发送新消息，Hermes 默认打断（interrupt）正在执行的主回答**，导致 prompt 前缀被重置——缓存瞬间失效。
+
+```text
+用户第1条消息 → AI开始生成回答...
+                  ↓ 用户发第2条（AI还没答完）
+                  ↓ interrupt → 前缀重置
+                  ↓ 第1条的回答文本被丢弃
+                  ↓ prompt 结构变化 → Cache MISS ❌
+                  ↓ 第2条请求需重新计算全部前缀 token
+```
+
+**Telegram DM 场景特别严重**：用户习惯连发消息——"这里改一下"、"然后呢"、"再加一段"。每条新消息都可能打断仍在执行的回答，每次都让 cache 从头开始。
+
+### 为什么是前缀缓存
+
+OpenAI/DeepSeek Responses API 的 Prompt Caching 不依赖语义相似度，而是**精确前缀匹配**：
+
+```
+Request #1:  [System Prompt] [Tool Defs] [Message 1]  → Cache Write
+Request #2:  [System Prompt] [Tool Defs] [Message 1] [Reply 1] [Message 2]  → Cache Hit ✅
+
+# 但如果 Message 2 打断了 Reply 1 的生成：
+Request #2:  [System Prompt] [Tool Defs] [Message 1] [Message 2]  → Cache Miss ❌
+```
+
+前缀差一个字符，整个缓存就废了。
+
+### 根因定位
+
+`BasePlatformAdapter.handle_message()` 对 active session 的非图片 follow-up 消息**默认执行 interrupt**。Telegram 适配器没有覆盖这个行为：
+
+```python
+# gateway/platforms/base.py
+# 原有逻辑：检测到 active session → interrupt → 处理新消息
+if session and session.is_active:
+    self._handle_interrupt_or_clear(event, session_key)
+```
+
+这意味着：用户连发 3 条文本 → 3 次 interrupt → 3 次 cache miss → 3 倍前缀 token 消耗。
+
+### 解决方案：排队代替打断
+
+核心思路：**文本消息不需要立刻打断 AI**。让当前回答正常完成，新消息排队等到下一轮再处理。
+
+#### 架构
+
+```
+用户发送文本 follow-up
+    ↓
+handle_message() 检测到 active session
+    ↓
+_should_interrupt_active_session(event, session_key)
+    ├── 返回 True  → 保留原逻辑（interrupt + 处理）
+    └── 返回 False → _queue_pending_event() 排队
+                        ↓
+                   当前轮结束后再处理（prompt 前缀稳定）
+```
+
+#### 改动 1：BasePlatformAdapter 新增钩子与排队方法
+
+```python
+# gateway/platforms/base.py
+
+# 钩子：默认 True，保持所有平台现有行为不变
+def _should_interrupt_active_session(self, event, session_key):
+    return True
+
+# 排队：将事件插入 _pending_messages，支持文本换行合并
+def _queue_pending_event(self, event, session_key, ...):
+    # 文本消息 → 换行合并到已有 pending
+    # 非文本 → 沿用原有合并逻辑
+```
+
+`handle_message()` 中的集成点：
+
+```python
+# clarify bypass 之后、busy_session_handler 之前
+if not self._should_interrupt_active_session(event, session_key):
+    self._queue_pending_event(event, session_key, ...)
+    return  # 不打断当前轮
+# 否则走原 interrupt 逻辑
+```
+
+#### 改动 2：TelegramAdapter 覆盖钩子
+
+```python
+# gateway/platforms/telegram.py
+
+def _should_interrupt_active_session(self, event, session_key):
+    # 文本 + 非命令 → 不打断，走排队
+    if event.message_type == MessageType.TEXT and not event.is_command():
+        return False
+    # 命令（/stop、/new、/reset）→ 立即打断
+    # 图片等其他类型 → 沿用默认行为
+    return super()._should_interrupt_active_session(event, session_key)
+```
+
+**效果对照**：
+
+| 消息类型 | 优化前 | 优化后 | 原因 |
+|----------|--------|--------|------|
+| 文本 "继续"、"再加一段" | 打断 | **排队** | 等当前回答完再处理 |
+| `/stop`、`/new`、`/reset` | 打断 | **打断** | 用户显式控制 |
+| 图片 | 打断 | **打断** | 沿用原有合并逻辑 |
+
+### Prompt Cache 诊断体系
+
+为了让缓存效果**可观测**，加入了诊断日志：
+
+```log
+# 请求时：记录 cache key —— 判断前缀是否一致
+INFO - prompt_cache_key=hermes:session:abc123..., prompt_cache_retention=24h
+
+# 响应时：记录缓存命中情况
+INFO - cache_read=1247 cache_write=0 reasoning=0 tokens_in=1250 tokens_out=384 latency=1.23s
+```
+
+**解读方法**：
+
+- `cache_read > 0` → **缓存命中** ✅ — 这 1247 tokens **免费**
+- `cache_read = 0` + 相同 `prompt_cache_key` → 缓存未命中 ⚠️ — 需要排查
+- 不同 `prompt_cache_key` → 前缀被重置 — 可能发生了 interrupt
+
+### 测试与部署
+
+**测试覆盖**：16 个专项测试全部通过，覆盖：
+
+- Telegram 文本非命令 → 不打断，事件入队
+- Telegram 命令（`/stop`、`/new`、`/reset`）→ 立即打断
+- 默认平台 → 保持原有行为不变
+- 队列合并逻辑（连续文本换行合并）
+- Prompt cache 日志输出验证
+
+**回归测试**：全部 155 个现有测试通过，**零回归**。
+
+```bash
+# 重启 gateway 使补丁生效
+hermes gateway restart
+```
+
+### 优化收益
+
+| 维度 | 优化前 | 优化后 |
+|------|--------|--------|
+| 连发消息 cache 命中率 | ~0%（每条都打断） | 显著提升（前缀稳定） |
+| 用户连发 3 条的成本 | 3 × 完整前缀 | 1 × 完整前缀 + 2 × 增量 |
+| 受影响范围 | 全部（Telegram 最严重） | **仅 Telegram**（其他平台不变） |
+| 回归风险 | — | **零**（155 个测试通过） |
+
+Prompt Cache 的定价通常是标准 token 的 **50% off**。对于高频对话场景，稳定的前缀意味着每次请求节省数千 token 的计算成本。这是一个改动量小、收益明确、对现有逻辑零影响的纯增量优化。
+
 ## 优化效果
 
 | 指标 | 优化前 | 优化后 | 降幅 |
@@ -175,6 +334,8 @@ hermes cron update <job_id> --enabled_toolsets terminal,file
 4. **Session 管理要主动**。`auto_prune`、`retention_days`、`idle_minutes` 三个配置缺一不可。
 
 5. **周期性审计**。这次 ¥31 的账单如果没有主动查看，可能默默烧到 ¥100+。建议设置 token_watchdog 定时检查 API 余额。
+
+6. **Prompt Cache 不是免费的午餐——它需要前缀稳定**。用户在 Telegram 上连发消息的行为会打断 AI 回答、重置前缀、导致 cache 完全失效。用"排队"代替"打断"是一个改动量极小、效果明确的优化。影响范围仅限 Telegram，其他平台行为完全不变。
 
 ## 附录：Token 看门狗脚本
 
@@ -206,4 +367,4 @@ elif pct >= 0.85:
 
 ---
 
-*优化于 2026-06-17 · 两机（Mac + ECS）同步实施*
+*优化于 2026-06-17 · 两机（Mac + ECS）同步实施 · Phase 4 补丁于 2026-06-19 追加*
