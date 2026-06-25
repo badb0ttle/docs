@@ -30,7 +30,7 @@ HTTP POST /tasks  ──→  RabbitMQ  ──→  Worker 异步处理
 用户拿到 `task_id` 后可以通过轮询或 SSE 查询进度。这就是 **任务投递-异步执行-进度查询** 的经典模式。
 
 ## 核心概念
-
+`Producer`:负责发送消息的一方
 ```text
 Producer ──→  Exchange  ──binding/routing_key──→  Queue  ──→  Consumer
               (交换机)                              (队列)       (消费者)
@@ -51,9 +51,21 @@ Producer ──→  Exchange  ──binding/routing_key──→  Queue  ──�
 | **Topic** | routing_key 支持 `*`（匹配一个词）和 `#`（匹配零或多个词） | 按主题订阅 |
 | **Fanout** | 忽略 routing_key，广播给所有绑定的 queue | 大喇叭广播 |
 
-> Day 2 全部脚本使用 **Direct 类型**。
 
 ## 交换机、队列、绑定的声明
+
+connect_robust:
+
+ ```python
+ conn = await aio_pika.connect_robust(AMQP_URL)
+ ```
+ 
+|恢复步骤	|说明	|为什么重要|
+|---|---|---|
+|1. 自动重连 TCP|	不断尝试重新建立与 RabbitMQ 服务器的 TCP 连接。|	解决了网络闪断或服务重启导致的连接断开问题。|
+|2. 重新创建 Channel|	重连成功后，会恢复你之前创建的 Channel（包括其 QoS 设置）。	|省去了手动重建 Channel 的麻烦。|
+|3. 重新绑定并恢复消费	|重新声明（Declare）队列，恢复绑定（Bind），并自动重新开始消费（Consume）。	|这是最关键的一点！ 消费者进程无需重启，就能继续从断开的地方开始处理消息。转换成markdown表格|
+
 
 ```python
 # 声明交换机
@@ -120,8 +132,6 @@ message = aio_pika.Message(
 
 > ⚠ 两者必须**同时设置**才有意义：只设 queue durable → 队列不丢，但消息（非持久化）重启后会消失。只设 message persistent → 队列不持久化的话，队列都没了谈何消息。
 
-Day 2 脚本实际验证了：RabbitMQ 重启后 Persistent 消息存活，Non-Persistent 消息丢失。
-
 ## 死信交换机（DLX — Dead Letter Exchange）
 
 当消息在队列中"死掉"时（被 nack/reject 且不 requeue，或消息过期，或队列满了），可以自动转发到一个**专门的死信交换机**，然后进入**死信队列**。
@@ -133,6 +143,16 @@ Day 2 脚本实际验证了：RabbitMQ 重启后 Persistent 消息存活，Non-P
 | 消费失败 | 消息直接消失，无处追踪 | 自动进入死信队列，可排查 |
 | 队列溢出 | 消息被丢弃 | 溢出的消息进 DLX |
 | 消息过期（TTL） | 过期即消失 | 过期后进 DLX |
+
+`arguments`:队列的可选参数（也叫 x-arguments）
+
+| 参数名 | 作用 | 典型场景 |
+|---------|---------|---------|
+| `x-message-ttl` | 设置队列中消息的生存时间（毫秒）。超时后消息会过期，可以被自动清理或进入死信队列。 | 设置临时性通知（如 60 秒后过期）、自动清理陈旧任务 |
+| `x-max-length` | 限制队列中的最大消息条数。超出限制时，根据策略丢弃队列头部消息或拒绝新消息。 | 防止队列无限增长，保护系统资源（如只保留最新 1000 条日志） |
+| `x-dead-letter-exchange` | 指定死信交换机。当消息被拒绝、过期或队列溢出时，消息会被路由到该交换机。 | 处理消费失败的消息、记录异常任务、实现延迟重试 |
+| `x-queue-type` | 指定队列类型。RabbitMQ 3.8+ 支持 `quorum`（基于 Raft 协议的高可靠队列）和 `stream`（流式队列）。 | 核心业务队列需要更高的数据安全性和可靠性 |
+| `x-max-priority` | 开启消息优先级支持，并指定最大优先级数量。 | 紧急任务优先处理（如 VIP 用户请求、高优告警） |
 
 ### 配置方式
 
@@ -158,10 +178,41 @@ dead_q = await channel.declare_queue("tasks.dead", durable=True)
 await dead_q.bind(dlx, routing_key="dead")
 ```
 
+
 消息被 NACK 后自动出现在死信队列里，头信息包含 `x-death`（原队列、失败原因等）。
 
 ## 指数退避 + 幂等性
+1. **消息重复投递**：同一个消息，被发了多次
+是什么：同一条消息被 RabbitMQ 发送给消费者不止一次。
+为什么发生：这通常不是故意的，而是由 “确认机制” 的网络延迟或超时引起的。
 
+场景：消费者处理完消息，正准备发送 ACK 确认，但此时网络闪断，RabbitMQ 没收到 ACK。
+后果：RabbitMQ 认为消息未被消费，于是重新将该消息投递给另一个消费者。
+核心应对策略：**幂等消费**。保证同一消息即使被处理多次，最终结果也只生效一次。通常会在消息中携带全局唯一的 message_id，消费者根据此 ID 进行去重。
+2. **消费失败**：消息处理出错了
+是什么：消费者接收到消息，但在处理业务逻辑时抛出了异常（比如数据库连接失败、业务校验不通过）。
+为什么发生：下游系统不稳定、数据格式错误、代码逻辑 Bug 等。
+核心应对策略：根据失败类型，采取不同措施。
+**可重试错误**（如网络超时、DB连接失败）：使用 Nack 或 Reject 并设置 requeue=True，让消息重新回到队列，配合重试策略（如指数退避）再次尝试。
+**不可重试错误**（如数据格式错误）：使用 Nack 或 Reject 并设置 requeue=False，配合死信队列 (DLQ) 将问题消息转存，供后续人工排查和分析。
+3. **消息堆积**：生产者太快，消费者太慢
+是什么：队列中积压了大量未处理的消息，消息的生产速度远大于消费速度。
+为什么发生：
+消费者能力不足：处理速度慢，或消费者实例太少。
+消费者“罢工”：消费者因 Bug 或异常而停止，但未正确关闭连接，导致队列以为它还在运行。
+消息阻塞：某条消息处理极慢（如大数据量导出），阻塞了后续消息的消费。
+核心应对策略：
+**增加消费者实例**（水平扩容），或提升单机处理性能。
+**设置队列长度限制** (x-max-length)，防止无限制堆积导致磁盘爆满。
+**监控与告警**：设置队列长度/消费延迟告警，第一时间发现堆积。
+**优化消费者逻辑**：将耗时任务异步化，避免阻塞。
+4. **消费者重启**：消费者挂了又起
+是什么：消费者进程因发布新版本、机器故障或内存溢出等原因被关闭，随后又重启恢复。
+为什么重要：消费者重启期间，消息会继续堆积；重启后，它需要知道从何处继续消费。
+核心应对策略：
+**优雅关闭**：在进程被 Kill 前，主动关闭 Channel 或 Connection，让 RabbitMQ 知道消费者已下线，从而将消息重新分配给其他消费者。
+**自动恢复机制**：利用 aio_pika 的 connect_robust()，在网络重连后能自动恢复 Channel 和 Queue 的消费状态。
+**确保幂等**：消费者重启后，可能会收到重启前已处理但未确认的消息，再次强调 “幂等消费” 的重要性。
 ### 指数退避
 
 不要失败后立即重试——可能下游还在故障中。逐次延长等待时间：
@@ -191,7 +242,7 @@ processed_ids.add(task_id)
 await do_work(data)
 ```
 
-> ⚠ Day 4 会用 Redis 替换内存 set，以支持多 Worker 共享状态。
+> 一般会用 Redis 替换内存 set，以支持多 Worker 共享状态。
 
 ## 连接管理
 
@@ -226,28 +277,6 @@ await channel.set_qos(prefetch_count=1)
 | `connection.channel()` | 创建 channel（虚拟连接，一个 TCP 连接可多路复用多个 channel） |
 | `channel.set_qos(prefetch_count=1)` | 每次只给 Worker 一条消息，处理完再发下一条（公平调度） |
 
-## Full Integration：FastAPI + RabbitMQ 任务分发器
-
-`06_task_dispatcher.py` 是 Day 2 的整合验证脚本。
-
-### 架构
-
-```text
-FastAPI (lifespan)
-  ├── POST /tasks              → publish 到 RabbitMQ → Worker 异步消费
-  ├── GET  /tasks/{task_id}    → 查询内存 TaskStore 状态
-  └── GET  /tasks/{task_id}/stream → SSE 流式推送进度
-```
-
-### 关键设计
-
-| 组件 | 实现 | 说明 |
-|---|---|---|
-| **Lifespan** | `@asynccontextmanager` | 启动时连接 RabbitMQ、声明拓扑、启动 Worker；关闭时取消 Worker、释放连接 |
-| **连接** | `aio_pika.connect_robust()` | 支持自动重连 |
-| **QoS** | `prefetch_count=1` | 同一时刻每个 Worker 只处理一条消息（公平调度） |
-| **TaskStore** | 内存 `dict` | Day 4 替换为 Redis |
-| **测试模式** | `uvicorn.Server` + `httpx` + 轮询验证 | 脚本自包含，不依赖外部 curl |
 
 ### Worker 流程
 
@@ -257,60 +286,316 @@ consume message → parse JSON → process_task (3 steps) → update store → a
 
 每步更新 `status` 和 `progress`，添加 `events` 供 SSE 推送。
 
-## 踩坑记录
+## 消息可靠性实战验证
 
-### RabbitMQ 4.x 与 aio-pika 不兼容 ❌
+前面的概念讨论都是纸上谈兵，这一节用三个实验展示实际运行中会发生什么。
 
-- **现象**：brew 安装的 RabbitMQ 4.x 无法用 aio-pika 连接
-- **原因**：aiormq 6.9.4（aio-pika 的底层）不兼容 RabbitMQ 4.x 的 AMQP 协议变更
-- **解决**：用 Docker 拉取 `rabbitmq:3-management` 镜像，提供 RabbitMQ 3.x
+### 实验一：消费者崩溃 → 消息重新投递
 
-### 删除非空队列报错 ❌
+这是 **at-least-once 语义的根本原因**。消费者拿到消息、还没来得及 ack 就挂了——RabbitMQ 检测到连接断开，把消息重新入队，投递给下一个消费者。
 
-- **现象**：`await queue.delete()` 报 `PRECONDITION_FAILED - queue not empty`
-- **原因**：aio-pika 不允许直接删除仍含消息的队列
-- **解决**：删除前先 `await queue.purge()` 清空队列
+```python
+# 消费者 A：拿消息但不 ack，直接关闭连接（模拟崩溃）
+crash_conn = await aio_pika.connect_robust(AMQP_URL)
+crash_ch = await crash_conn.channel()
+crash_q = await crash_ch.declare_queue("tasks.crash_test", durable=True, passive=True)
 
-### aio-pika 9.x API 变化 ⚠
+async def crash_handler(message: aio_pika.IncomingMessage):
+    data = json.loads(message.body)
+    print(f"Received msg{data['id']} — but CRASHING before ack!")
+    await crash_conn.close()  # 不 ack，直接断开
 
-- `queue.declare().message_count` → `queue.declare().declared_message_count`
-- 9.6.2 版本部分属性名变更
+await crash_q.consume(crash_handler)
+# → 连接断开 → RabbitMQ 把消息 requeue → 重新投递
 
-### passwd 脱敏误导 ⚠
-
-- **现象**：`write_file` 后读取文件，密码显示为 `***`
-- **真相**：文件实际字节是正确的密码值（用 `xxd` 确认），只是输出脱敏
-
-### SSE 解析不可靠 ⚠
-
-- `aiter_lines()` 流式解析 SSE 时，单次读取可能拿到不完整的 JSON
-- **改用轮询**：`GET /tasks/{task_id}` 每 0.3s 拉一次状态，10s 超时
-
-### 异步取消的正常噪声 ⚠
-
-- shutdown 时出现 `CancelledError`、`ChannelInvalidStateError` 是异步取消的正常清理噪声，不是 bug
-
-## 命令行速查
-
-```bash
-# 启动 RabbitMQ 容器（Docker Desktop）
-docker run -d --name rabbitmq-dev \
-  -p 5672:5672 -p 15672:15672 \
-  -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=admin \
-  rabbitmq:3-management
-
-# 进入容器创建 dev 用户
-docker exec -it rabbitmq-dev rabbitmqctl add_user dev <password>
-docker exec -it rabbitmq-dev rabbitmqctl set_permissions -p / dev ".*" ".*" ".*"
-
-# 管理界面
-open http://localhost:15672
-
-# 运行 Day 2 脚本
-/opt/anaconda3/bin/python3 learn/day2/01_rabbitmq_concepts.py
-/opt/anaconda3/bin/python3 learn/day2/02_producer_consumer.py
-/opt/anaconda3/bin/python3 learn/day2/03_durability.py
-/opt/anaconda3/bin/python3 learn/day2/04_error_handling.py
-/opt/anaconda3/bin/python3 learn/day2/05_retry_idempotent.py
-/opt/anaconda3/bin/python3 learn/day2/06_task_dispatcher.py
+# 消费者 B：正常消费，能收到被 requeue 的消息
+normal_conn = await aio_pika.connect_robust(AMQP_URL)
+# ... 正常消费 → ack → 成功恢复
 ```
+
+关键认知：
+- RabbitMQ **不保证** exactly-once，只保证 at-least-once
+- 消费者可能在处理完消息后、ack 之前崩溃
+- **解决方案在消费者端：必须幂等消费**（见下一节）
+
+### 实验二：prefetch_count 与公平调度
+
+`prefetch_count` 控制每个消费者一次从队列拿多少条消息：
+
+| 设置 | 行为 | 适用场景 |
+|---|---|---|
+| `prefetch_count=1` | 轮询公平分发，处理完一条再拿一条 | 多消费者均摊负载 |
+| `prefetch_count=10` | 快的消费者拿得多，慢的拿得少 | 消费者处理速度差异大时让能者多劳 |
+
+```python
+# 公平分发：两个消费者，一个快（0.05s）一个慢（0.3s）
+await channel.set_qos(prefetch_count=1)
+# 结果：快消费者 ~3 条，慢消费者 ~3 条（各一半）
+
+# 能者多劳：
+await channel.set_qos(prefetch_count=10)
+# 结果：快消费者 ~5 条，慢消费者 ~1 条（快者多拿）
+```
+
+> ⚠ prefetch_count 过大时，消息在消费者本地 buffer 中堆积，如果消费者崩溃，所有这些消息都要 requeue——**小心放大 at-least-once 的影响面**。
+
+### 实验三：消费者重启 + 持久队列
+
+durable queue 的生命周期独立于消费者连接。
+
+```python
+# 消费者 1：消费 1 条后断开
+await c1_q.consume(c1_handler)
+# 处理 1 条 → ack → 关闭连接
+# 队列剩余 2 条消息
+
+# 消费者 2：重连，从断点继续
+c2_conn = await aio_pika.connect_robust(AMQP_URL)
+await c2_q.consume(c2_handler)
+# → 收到剩余 2 条消息 → 无缝续接
+```
+
+这就是**生产者与消费者生命周期完全解耦**的体现：两者不需要同时在线，消息在 queue 中等候。
+
+## 幂等消费与 DB 事务一致性
+
+这是整个系统最核心的设计难题：**消息队列和数据库是两个独立的系统，没有分布式事务保证。** 你必须自己处理二者之间的状态一致性。
+
+### 困境：ack 和 DB 写入谁先谁后？
+
+```text
+选项 A: 先 ack 再写 DB
+  → 进程崩溃 → 消息已从队列删除，DB 没有记录 → 数据永久丢失 ❌
+
+选项 B: 先写 DB 再 ack
+  → 进程崩溃 → DB 有记录，消息还在队列 → 重复消费 ⚠（可接受）
+```
+
+**原则：永远先写 DB，后 ack。** 宁可重复处理，不可丢失数据。重复可以通过幂等解决，丢失无法恢复。
+
+### 错误模式：ack 先于 DB（数据丢失）
+
+```python
+async def bad_handler(message: aio_pika.IncomingMessage):
+    data = json.loads(message.body)
+    await message.ack()          # ← 消息已从队列删除
+    print("ACK'ed — message gone!")
+    
+    # 此时进程崩溃 ↓
+    async with db_session() as db:
+        task = DBTask(id=data["task_id"], ...)
+        db.add(task)
+        await db.commit()        # ← 永远不会执行
+```
+
+> ❌ 结果：队列空了，DB 也没有记录——消息永久丢失，无法追踪。
+
+### 正确模式：DB 先于 ack + 幂等去重
+
+```python
+async def idempotent_handler(message: aio_pika.IncomingMessage):
+    data = json.loads(message.body)
+    ikey = data["idempotent_key"]  # 每条消息的唯一标识
+
+    async with db_session() as db:
+        # Step 1: 检查是否已处理（幂等判断）
+        existing = await db.execute(
+            select(DBTask).where(DBTask.idempotent_key == ikey)
+        )
+        if existing.scalar_one_or_none() is not None:
+            print(f"DUPLICATE {ikey} — skipping")
+            await message.ack()        # 已处理过，直接确认跳过
+            return
+
+        # Step 2: 写 DB + 执行业务逻辑（事务中）
+        try:
+            task = DBTask(
+                id=data["task_id"],
+                idempotent_key=ikey,   # ← 数据库 unique constraint 兜底
+                status="processing",
+            )
+            db.add(task)
+            await db.commit()          # ← 先持久化
+            
+            # Step 3: 确认 DB 写入成功后才 ack
+            await message.ack()
+        except IntegrityError:
+            # 竞态场景：另一个 Worker 同时写入了同一条
+            await db.rollback()
+            await message.ack()        # 虽然我写失败了，但别人写成功了
+```
+
+```sql
+-- 数据库层面：唯一约束作为最终防线
+CREATE UNIQUE INDEX idx_tasks_idempotent_key ON tasks(idempotent_key);
+```
+
+### 完整幂等消费流程
+
+```text
+┌─────────────────────────────────────────────┐
+│  Worker 消费一条消息                          │
+│                                              │
+│  1. 解析消息 → 提取 idempotent_key           │
+│  2. SELECT WHERE idempotent_key = ?          │
+│     ├─ 已存在 → ack() → return（跳过）        │
+│     └─ 不存在 → 继续 ↓                        │
+│  3. INSERT task (idempotent_key=?)           │
+│     ├─ 成功 → 执行业务 → ack()               │
+│     └─ IntegrityError（竞态）→ rollback → ack │
+│                                              │
+│  双重防线：                                   │
+│  - 正常路径：应用层检查（步骤 2）              │
+│  - 异常路径：DB unique constraint 兜底（步骤3）│
+└─────────────────────────────────────────────┘
+```
+
+> 核心结论：**ack 和 DB 写入之间没有原子性保证，但有实际上的 exactly-once 效果——通过「DB 先写 + 幂等去重」把 at-least-once 的重复投递消化掉。**
+
+## HTTP API + Worker + DB 完整架构
+
+前三天的知识汇总：FastAPI 接收请求 → RabbitMQ 异步分发 → Worker 处理 → PostgreSQL 持久化全程状态。
+
+### 架构全景
+
+```text
+Client                          FastAPI (uvicorn)
+  │                               │
+  ├─ POST /tasks ────────────────→│  → DB: INSERT Task(PENDING)
+  │  {type, payload,              │  → RabbitMQ: publish(task.new)
+  │   idempotent_key}             │  → 返回 task_id（同步完成，<50ms）
+  │                               │
+  ├─ GET /tasks/{id} ────────────→│  → DB: SELECT Task
+  │                               │  → 返回 status/progress
+  │                               │
+  ├─ GET /tasks/{id}/stream ─────→│  → SSE 循环 DB 轮询
+  │  event: status_change         │    状态变化时推送事件
+  │  event: done                  │
+  │                               │
+                                  Worker (asyncio task)
+                                    │
+                                    ├─ consume from RabbitMQ
+                                    ├─ DB: Task(PARSING)   + Step 0
+                                    ├─ DB: Task(EXECUTING) + Step 1
+                                    ├─ DB: Task(VERIFYING) + Step 2
+                                    ├─ DB: Task(SUCCESS)
+                                    └─ RabbitMQ: ack
+```
+
+### 关键代码
+
+**Lifespan 管理连接生命周期：**
+
+```python
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # 启动时：建立连接 + 声明拓扑 + 启动 Worker
+    app.state.rabbit_conn = await aio_pika.connect_robust(AMQP_URL)
+    app.state.rabbit_ch = await app.state.rabbit_conn.channel()
+    await app.state.rabbit_ch.set_qos(prefetch_count=1)
+
+    task_ex = await app.state.rabbit_ch.declare_exchange(...)
+    task_q = await app.state.rabbit_ch.declare_queue(...)
+    await task_q.bind(task_ex, routing_key="task.new")
+
+    worker = asyncio.create_task(run_worker())  # 后台消费
+
+    yield  # ← 服务运行中
+
+    # 关闭时：取消 Worker + 关闭连接
+    worker.cancel()
+    await app.state.rabbit_conn.close()
+```
+
+**POST /tasks：写 DB + 发布消息：**
+
+```python
+@app.post("/tasks")
+async def create_task(task: dict):
+    task_id = str(uuid.uuid4())
+    idempotent_key = task.get("idempotent_key", f"api-{uuid.uuid4().hex[:8]}")
+
+    async with db_session() as db:
+        # 幂等检查
+        existing = await db.execute(
+            select(DBTask).where(DBTask.idempotent_key == idempotent_key)
+        )
+        if existing.scalar_one_or_none():
+            return {"task_id": existing.id, "note": "already exists"}
+
+        db.add(DBTask(id=task_id, idempotent_key=idempotent_key, status="pending"))
+        await db.commit()
+
+    await app.state.task_ex.publish(...)  # 发布到 RabbitMQ
+    return {"task_id": task_id, "status": "pending"}
+```
+
+**Worker：消费 → 多步骤处理 → 每步写入 DB：**
+
+```python
+async def process_task(task_data: dict):
+    steps = [("PARSING", "解析参数"), ("EXECUTING", "AI处理"), ("VERIFYING", "验证结果")]
+
+    for i, (status, desc) in enumerate(steps):
+        async with db_session() as db:
+            task = (await db.execute(select(DBTask).where(DBTask.id == tid))).scalar_one()
+            task.status = status
+            task.progress = (i + 1) / len(steps) * 100
+
+            db.add(Step(task_id=tid, sequence=i, name=status, status="success", ...))
+            await db.commit()
+
+    # 最终状态
+    task.status = "success"
+    task.progress = 100.0
+    task.output_payload = {"summary": f"task completed"}
+```
+
+**SSE 流式追踪：**
+
+```python
+@app.get("/tasks/{task_id}/stream")
+async def stream_task(task_id: str):
+    async def event_stream():
+        last_status = None
+        for _ in range(30):  # 最多轮询 30 次
+            async with db_session() as db:
+                task = (await db.execute(select(DBTask).where(DBTask.id == task_id))).scalar_one()
+
+            if task.status != last_status:
+                yield f"event: status_change\ndata: {json.dumps({'status': task.status, 'progress': task.progress})}\n\n"
+                last_status = task.status
+
+            if task.status in ("success", "failed"):
+                yield f"event: done\ndata: {json.dumps({'status': task.status})}\n\n"
+                return
+
+            await asyncio.sleep(0.3)  # 300ms 轮询间隔
+
+    return StreamingResponse(event_stream(), media_type="text/event-stream")
+```
+
+### 与纯内存方案（Day 2.6）的对比
+
+| 特性 | 纯内存（06_task_dispatcher） | DB 持久化（09_api_worker_db） |
+|---|---|---|
+| 服务重启 | 任务状态全部丢失 | 持久化，重启后可恢复 |
+| 多 Worker | 不支持（内存 set 无法共享） | 支持（共享 PostgreSQL） |
+| 幂等 | 内存 set（重启丢失） | DB unique constraint（永久） |
+| 查询历史 | 不支持 | 支持（SQL 查询历史任务和步骤） |
+| 复杂度 | 简单，100 行 | 更高，但生产可用 |
+
+### 演进路线总结
+
+```text
+Day 1  fastapi.py ─────→  同步 HTTP，单机处理
+Day 2  01~05 脚本 ─────→  消息队列基础（pub/sub, ACK, DLX, durability）
+Day 2  06_task_dispatcher →  API + Worker 分离（内存存储）
+Day 2  07_message_reliability →  消息可靠性实验验证
+Day 2  08_transactional_consistency →  幂等消费 + DB 事务一致性
+Day 2  09_api_worker_db →  API + Worker + DB 完整架构（生产可用原型）
+Day 3  SQLAlchemy ──────→  数据持久化基础设施（表设计、CRUD、迁移）
+```
+
+> 从 Day 1 的「收到请求直接处理」到 09 脚本的「API 投递 → MQ 分发 → Worker 多步骤处理 → DB 全链路持久化」，一步步演进出生产环境的完整异步任务架构。
+
