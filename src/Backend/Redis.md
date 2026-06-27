@@ -1,7 +1,7 @@
 ---
 title: Redis 与短期任务状态
 icon: 
-order: 6
+order: 7
 editLink: false
 cover: 
 category:
