@@ -34,9 +34,9 @@ tag:
 一条节点消息的生命周期可以概括为：
 
 1. Consumer 从 Kafka 或 RabbitMQ 拉取消息。
-2. 使用 `message_id` 申请 Redis 幂等处理权。
+2. 使用消息标识申请 Redis 幂等处理权。
 3. 用 Pydantic 校验 `NodeMessage`，根据 `slug` 查找 Handler。
-4. 创建与 `task_id` 关联的 Langfuse Trace，执行异步 Handler。
+4. 创建与任务标识关联的 Langfuse Trace，执行异步 Handler。
 5. 构造 `NodeCallbackMessage`，发送到回调队列。
 6. 只有业务结果已发送且幂等状态原子变更为 `done` 后，才确认消息。
 
@@ -44,7 +44,7 @@ tag:
 
 ## Kafka 与 RabbitMQ
 
-AIGun AI 默认使用 Kafka 作为消息通道，同时保留 RabbitMQ 适配器。两者被统一到 Producer、Consumer 和消息类型抽象之后，上层 DAG 不需要感知底层实现。选择消息系统时，我关注的不是“哪个更流行”，而是：
+该平台默认使用 Kafka 作为消息通道，同时保留 RabbitMQ 适配器。两者被统一到 Producer、Consumer 和消息类型抽象之后，上层 DAG 不需要感知底层实现。选择消息系统时，我关注的不是“哪个更流行”，而是：
 
 - 是否支持当前的消费模型和并发度。
 - 如何记录 offset、重试次数和积压情况。
@@ -75,4 +75,4 @@ AIGun AI 默认使用 Kafka 作为消息通道，同时保留 RabbitMQ 适配器
 
 ## 小结
 
-DAG 解决“流程如何组合”，消息队列解决“节点如何异步协作”，Redis 幂等和 DLQ 解决“失败后如何恢复”。三者组合后，AI 分析链路才能在并发、重试和部分故障下保持可控。
+DAG 解决“流程如何组合”，消息队列解决“节点如何异步协作”，Redis 幂等和 DLQ 解决“失败后如何恢复”。三者组合后，AI 处理链路才能在并发、重试和部分故障下保持可控。
