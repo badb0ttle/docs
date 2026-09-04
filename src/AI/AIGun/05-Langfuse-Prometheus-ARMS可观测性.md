@@ -1,0 +1,73 @@
+---
+title: Langfuse、Prometheus 与 ARMS 可观测性
+icon: chart-line
+order: 5
+editLink: false
+category:
+  - 项目
+  - AI
+tag:
+  - Langfuse
+  - Prometheus
+  - ARMS
+  - OpenTelemetry
+  - 监控
+---
+
+# Langfuse、Prometheus 与 ARMS 可观测性
+
+## 三种观测视角
+
+AI 微服务的问题通常横跨模型、消息和基础设施，单看日志很难还原完整过程。AIGun AI 将观测拆成三个互补层次：
+
+| 层次 | 工具 | 回答的问题 |
+| --- | --- | --- |
+| Trace | Langfuse、OpenTelemetry | 一次任务经过了哪些节点？模型看到了什么？ |
+| 指标 | Prometheus | 系统是否变慢、积压或错误率升高？ |
+| 日志与告警 | 结构化日志、阿里云 ARMS | 何时发生、影响范围多大、是否需要通知？ |
+
+## Langfuse Trace
+
+每条 DAG 消息携带 `task_id`，Worker 用它关联 Langfuse Trace；节点 slug、输入输出摘要、模型调用、Prompt 版本和耗时都可以在同一条链路中查看。对接页面时，不能只看“节点存在”，还要核对 observation 的原始 payload 和状态，确认结果究竟来自哪个节点。
+
+Trace 对 AI 问题特别重要：例如“最终没有代币”可能是模型没有提取、搜索没有命中、过滤节点丢弃，或前端读取了旧 Trace。只有沿节点顺序查看输入输出，才能确定责任边界。
+
+## Prometheus Worker 指标
+
+Worker 暴露连接、并发、队列和节点级指标，包括：
+
+- MQ 连接与 channel 是否可用。
+- 消息成功、错误、超时和重复消费数量。
+- 消息处理耗时分布。
+- 本地队列积压、活跃任务和配置的并发数。
+- Kafka 待提交记录及最老消息年龄。
+- 节点按 slug 和 status 的处理次数与耗时。
+- 进入 DLQ 的消息数量。
+
+指标命名和标签保持稳定后，Grafana 或 ARMS 才能做出跨服务对比。排查时先用指标确认问题发生的时间窗口，再用日志和 Trace 深挖具体任务。
+
+## 阿里云 ARMS 告警
+
+ARMS 负责把指标和链路异常转化为可通知事件，例如 Worker 错误率升高、队列积压、连接断开或节点延迟异常。接入过程中遇到过 GRPC 端点连接问题，后来切换 HTTP 端点验证链路追踪是否正常。这让我认识到：监控接入本身也需要健康检查、端点验证和降级方案，不能只在配置文件里“写上已接入”。
+
+## 推荐排查顺序
+
+```text
+ARMS 告警 / 用户反馈
+          │
+          ▼
+Prometheus 指标：时间窗口、错误率、积压、延迟
+          │
+          ▼
+结构化日志：任务 ID、消息 ID、节点 slug、异常堆栈
+          │
+          ▼
+Langfuse Trace：首个异常 observation、原始输入输出
+          │
+          ▼
+确认根因与影响集合，形成修复和回归案例
+```
+
+## 小结
+
+指标告诉我“系统哪里不健康”，日志告诉我“具体发生了什么”，Trace 告诉我“这次任务为什么得到这个结果”。三者结合，才能把 AI 系统的排障从猜测变成证据链。
