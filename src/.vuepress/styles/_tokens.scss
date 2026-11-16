@@ -1,0 +1,78 @@
+// Zine tokens: warm paper, ink, Kessoku yellow, deep teal.
+:root {
+  --z-yellow: #f2c230;
+  --z-yellow-soft: #f7e6ae;
+  --z-chip-bg: #f5e3a6;
+  --z-highlight: #f2c230;
+  --z-pink: #e0647f;
+  --z-ink: #1d1a15;
+  --z-paper: #f7f3e9;
+  --z-hairline: #ddd3bf;
+  --z-hairline-strong: #c9bda6;
+  --z-home-gutter: max(2rem, calc((100vw - 1176px) / 2));
+  --z-radius: 2px;
+  --navbar-c-bg: rgba(247, 243, 233, 0.86);
+  --sidebar-c-bg: var(--vp-c-bg);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --z-yellow-soft: rgba(242, 194, 48, 0.16);
+  --z-chip-bg: #f2c230;
+  --z-highlight: rgba(242, 194, 48, 0.36);
+  --z-paper: #14120f;
+  --z-hairline: #322d25;
+  --z-hairline-strong: #443d32;
+  --navbar-c-bg: rgba(20, 18, 15, 0.86);
+  color-scheme: dark;
+}
+
+html {
+  scrollbar-color: var(--z-hairline-strong) transparent;
+}
+
+body {
+  background: var(--vp-c-bg);
+}
+
+::selection {
+  background: var(--z-yellow);
+  color: var(--z-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--vp-c-accent);
+  outline-offset: 3px;
+}
+
+a {
+  text-underline-offset: 0.2em;
+}
+
+// Decorative click spark rendered by client.ts.
+.zine-click {
+  position: fixed;
+  z-index: 9998;
+
+  width: 0;
+  height: 0;
+
+  pointer-events: none;
+
+  i {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zine-click {
+    display: none;
+  }
+}

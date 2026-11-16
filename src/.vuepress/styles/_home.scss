@@ -1,0 +1,533 @@
+// ---------------------------------------------------------------------------
+// Home: a section index + an editorial article list.
+// ---------------------------------------------------------------------------
+.vp-blog-home {
+  --content-width: 860px;
+}
+
+.vp-blog-home .vp-blog-main {
+  max-width: 860px;
+}
+
+.vp-blog-home .vp-project-panel {
+  --project-gap: 0;
+
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  counter-reset: project;
+
+  margin: 0 0 2.75rem;
+  border-top: 1px solid var(--z-hairline);
+  border-inline-start: 1px solid var(--z-hairline);
+}
+
+.vp-blog-home .vp-project-card[class*="color"],
+.vp-blog-home .vp-project-card {
+  position: relative;
+
+  display: block;
+
+  width: auto;
+  min-width: 0;
+  min-height: 9.5rem;
+  margin: 0;
+  padding: 1rem 1.15rem 1.25rem;
+
+  border: 0;
+  border-inline-end: 1px solid var(--z-hairline);
+  border-bottom: 1px solid var(--z-hairline);
+  border-radius: 0;
+
+  background: transparent;
+  color: var(--vp-c-text);
+
+  counter-increment: project;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+
+  &::before {
+    content: counter(project, decimal-leading-zero);
+
+    display: block;
+    margin-bottom: 1.35rem;
+
+    color: var(--vp-c-text-subtle);
+    font-family: var(--vp-font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+
+    transition: color 0.18s ease;
+  }
+
+  .vp-project-icon {
+    position: absolute;
+    top: 1.05rem;
+    inset-inline-end: 1.1rem;
+    float: none;
+
+    width: 1.15rem;
+    height: 1.15rem;
+    margin: 0;
+
+    color: var(--vp-c-text-mute);
+    font-size: 1.05rem;
+
+    transition: color 0.18s ease;
+  }
+
+  .vp-project-name {
+    color: var(--vp-c-text);
+    font-family: var(--vp-font-heading);
+    font-size: 1.12rem;
+    font-weight: 700;
+    line-height: 1.3;
+
+    transition: color 0.18s ease;
+  }
+
+  .vp-project-desc {
+    max-width: 92%;
+    margin: 0.35rem 0 0;
+
+    color: var(--vp-c-text-mute);
+    font-size: 11.5px;
+    line-height: 1.5;
+
+    transition: color 0.18s ease;
+  }
+
+  &:hover {
+    background: var(--z-yellow);
+
+    &::before,
+    .vp-project-name,
+    .vp-project-desc,
+    .vp-project-icon {
+      color: var(--z-ink);
+    }
+  }
+}
+
+[data-theme="dark"] .vp-blog-home .vp-project-card[class*="color"]:hover {
+  background: var(--z-yellow);
+}
+
+// ---------------------------------------------------------------------------
+// Article list
+// ---------------------------------------------------------------------------
+.vp-article-list {
+  counter-reset: post;
+}
+
+.vp-blog-home .vp-article-list::before {
+  content: "最新文章 / LATEST";
+
+  display: block;
+  margin-bottom: 1rem;
+
+  color: var(--vp-c-text-subtle);
+  font-family: var(--vp-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+}
+
+.vp-article-wrapper {
+  position: relative;
+
+  counter-increment: post;
+
+  margin: 0;
+  border-top: 1px solid var(--z-hairline);
+
+  &:first-of-type {
+    border-top: 0;
+  }
+
+  &::before {
+    content: counter(post, decimal-leading-zero);
+
+    position: absolute;
+    inset-inline-start: 0;
+    top: 2.1rem;
+
+    color: var(--vp-c-text-subtle);
+    font-family: var(--vp-font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+  }
+}
+
+.vp-article-item {
+  padding: 1.8rem 0 1.6rem 3rem;
+
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+
+  transition: background 0.18s ease;
+
+  &:hover {
+    background: var(--vp-c-bg-alt);
+    box-shadow: none;
+  }
+}
+
+.vp-article-title {
+  max-width: 100%;
+
+  color: var(--vp-c-text);
+  font-family: var(--vp-font-heading);
+  font-size: clamp(1.22rem, 1.6vw, 1.45rem);
+  line-height: 1.4;
+
+  &::after {
+    display: none;
+  }
+
+  a {
+    padding: 0 0.05em;
+
+    font-weight: 700;
+    text-decoration: none;
+
+    background-image: linear-gradient(transparent 62%, var(--z-highlight) 62%);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 100%;
+
+    transition: background-size 0.28s ease;
+
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+}
+
+.vp-article-wrapper:hover .vp-article-title a {
+  background-size: 100% 100%;
+}
+
+.vp-article-excerpt {
+  position: relative;
+
+  overflow: hidden;
+
+  max-height: 6.4em;
+  margin-top: 0.55rem;
+
+  color: var(--vp-c-text-mute);
+  font-size: 0.94rem;
+  line-height: 1.7;
+
+  mask-image: linear-gradient(to bottom, #000 68%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 68%, transparent 100%);
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  img,
+  figure,
+  div[class*="language-"],
+  .code-demo-wrapper {
+    display: none;
+  }
+
+  p,
+  ul,
+  ol {
+    margin-block: 0.35em;
+    line-height: 1.7;
+  }
+
+  li {
+    margin-block: 0.15em;
+  }
+
+  ul,
+  ol {
+    padding-inline-start: 1.1em;
+  }
+}
+
+.vp-article-hr {
+  display: none;
+}
+
+.vp-article-list .vp-article-cover {
+  display: none;
+}
+
+.vp-article-item .page-info {
+  margin-top: 1rem;
+
+  color: var(--vp-c-text-mute);
+  font-size: 11.5px;
+}
+
+.vp-article-item .page-info > span {
+  margin-inline-end: 0.85rem;
+  line-height: 2;
+}
+
+.vp-article-item .page-info .icon {
+  width: 1.05em;
+  height: 1.05em;
+  opacity: 0.7;
+}
+
+// Chips: one readable language. Category = yellow marker; tag = hairline outline.
+.page-category-item,
+.page-tag-item {
+  border-radius: var(--z-radius);
+  font-family: var(--vp-font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.8;
+}
+
+.page-category-item,
+.page-category-item[class*="color"] {
+  background: var(--z-chip-bg);
+  color: var(--z-ink);
+}
+
+.page-category-item[class*="color"]:hover {
+  background: var(--z-yellow);
+  color: var(--z-ink);
+}
+
+.page-tag-item,
+.page-tag-item[class*="color"] {
+  padding: 0 0.4em;
+  border: 1px solid var(--z-hairline);
+  background: transparent;
+  color: var(--vp-c-text-mute);
+}
+
+.page-tag-item[class*="color"]:hover {
+  border-color: var(--vp-c-text-mute);
+  background: transparent;
+  color: var(--vp-c-text);
+}
+
+[data-theme="dark"] .page-category-item,
+[data-theme="dark"] .page-category-item[class*="color"] {
+  background: var(--z-chip-bg);
+  color: var(--z-ink);
+}
+
+[data-theme="dark"] .page-category-item[class*="color"]:hover {
+  background: var(--z-yellow);
+  color: var(--z-ink);
+}
+
+[data-theme="dark"] .page-tag-item,
+[data-theme="dark"] .page-tag-item[class*="color"] {
+  border-color: var(--z-hairline-strong);
+  background: transparent;
+  color: var(--vp-c-text-mute);
+}
+
+// ---------------------------------------------------------------------------
+// Pagination
+// ---------------------------------------------------------------------------
+.vp-pagination {
+  margin-top: 2.25rem;
+
+  font-family: var(--vp-font-mono);
+  font-size: 12px;
+}
+
+.vp-pagination-number {
+  height: 32px;
+  border-radius: 0;
+
+  div {
+    background: transparent;
+    color: var(--vp-c-text-mute);
+
+    &.active {
+      background: var(--z-yellow);
+      color: var(--z-ink);
+    }
+  }
+}
+
+.vp-pagination-button {
+  border-radius: 0;
+  background: transparent;
+  color: var(--vp-c-text);
+  font-family: var(--vp-font-mono);
+  font-size: 12px;
+}
+
+.vp-pagination-nav input {
+  border-radius: 0;
+  background: transparent;
+  font-family: var(--vp-font-mono);
+}
+
+@media (max-width: 1100px) {
+  .vp-blog-home .vp-project-panel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 959px) {
+  .zine-hero {
+    padding-inline: max(1rem, calc((100vw - 860px) / 2));
+  }
+
+  .vp-blog-home .vp-blog-info-wrapper {
+    display: none;
+  }
+
+  .vp-article-item {
+    padding-inline-start: 2.5rem;
+  }
+
+  .vp-article-wrapper::before {
+    top: 1.95rem;
+  }
+}
+
+@media (max-width: 719px) {
+  .zine-hero {
+    padding-inline: 1.5rem;
+  }
+
+  .vp-blog-home .vp-blog-main {
+    padding-inline: 1.5rem;
+  }
+
+  .vp-blog-home .vp-project-card[class*="color"],
+  .vp-blog-home .vp-project-card {
+    min-height: 8.5rem;
+    padding: 0.9rem 1rem 1.1rem;
+
+    &::before {
+      margin-bottom: 1rem;
+    }
+
+    .vp-project-desc {
+      max-width: 100%;
+    }
+  }
+
+  .vp-article-item {
+    padding: 1.5rem 0;
+  }
+
+  .vp-article-wrapper::before {
+    display: none;
+  }
+
+  .vp-article-excerpt {
+    max-height: 5.4em;
+    font-size: 0.9rem;
+  }
+
+  .vp-article-item .page-info {
+    font-size: 11.5px;
+  }
+
+  .vp-article-item .page-info > span {
+    font-size: 1em;
+  }
+
+  // On a phone the eight section cards would push the first article past the
+  // first screen and repeat the nav. Keep them as a compact scrollable index.
+  .vp-blog-home .vp-project-panel {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.4rem;
+
+    min-width: 0;
+    margin: 0 0 1.5rem;
+    padding-bottom: 0;
+    border: 0;
+  }
+
+  .vp-blog-home .vp-project-card[class*="color"],
+  .vp-blog-home .vp-project-card {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    min-width: 0;
+    min-height: 0;
+    padding: 0.5rem 0.6rem;
+
+    border: 1px solid var(--z-hairline);
+    border-radius: var(--z-radius);
+
+    &::before,
+    .vp-project-icon,
+    .vp-project-desc {
+      display: none;
+    }
+
+    .vp-project-name {
+      min-width: 0;
+      overflow: hidden;
+
+      font-family: var(--vp-font);
+      font-size: 0.88rem;
+      font-weight: 500;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .category-count {
+      font-size: 11px;
+    }
+  }
+
+  .category-index .category-all .category-count {
+    display: none;
+  }
+}
+
+// The homepage index is now the real category map: top categories + all.
+.vp-blog-home .category-index {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.category-index .category-count {
+  margin-inline-start: 0.35em;
+
+  color: var(--vp-c-text-mute);
+  font-family: var(--vp-font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0;
+
+  transition: color 0.18s ease;
+}
+
+.category-index .category-all {
+  background: var(--z-yellow-soft);
+}
+
+.category-index .category-all:hover {
+  background: var(--z-yellow);
+}
+
+.category-index .vp-project-card:hover .category-count {
+  color: var(--z-ink);
+}
+
+// A little paper between the poster and the index.
+.vp-blog-home .vp-blog-main {
+  padding-top: 2rem;
+}
+
+@media (max-width: 719px) {
+  .vp-blog-home .vp-blog-main {
+    padding-top: 1.5rem;
+  }
+}

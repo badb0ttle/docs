@@ -1,0 +1,526 @@
+// ---------------------------------------------------------------------------
+// Navbar — paper chrome, one yellow marker for the current section.
+// ---------------------------------------------------------------------------
+.vp-navbar {
+  --navbar-padding-y: 0.55rem;
+
+  border-bottom: 1px solid var(--z-hairline);
+  box-shadow: none;
+  background: var(--navbar-c-bg);
+  backdrop-filter: saturate(160%) blur(16px);
+}
+
+body.transparent-navbar .vp-navbar {
+  border-bottom-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.vp-nav-logo {
+  height: 2rem;
+  margin-inline-end: 0.65rem;
+  border-radius: 50%;
+}
+
+.vp-site-name {
+  color: var(--vp-c-text);
+  font-family: var(--vp-font-heading);
+  font-size: 1.16rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.vp-brand:hover .vp-site-name {
+  color: var(--vp-c-text);
+}
+
+.vp-nav-links {
+  gap: 0.1rem;
+  font-family: var(--vp-font);
+  font-size: 0.88rem;
+}
+
+.vp-nav-item {
+  margin: 0 0.1rem;
+}
+
+.vp-nav-item > .auto-link {
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--z-radius);
+  color: var(--vp-c-text);
+  font-weight: 500;
+
+  &::before {
+    bottom: 0.15rem;
+    height: 2px;
+    border-radius: 0;
+    background: var(--z-yellow);
+  }
+
+  &.route-link-active {
+    color: var(--vp-c-text);
+    font-weight: 600;
+  }
+
+  &:hover {
+    color: var(--vp-c-text);
+  }
+}
+
+body.transparent-navbar .vp-navbar .vp-nav-item > .auto-link.route-link-active {
+  color: #fff;
+}
+
+body.transparent-navbar {
+  .slimsearch-button {
+    border-color: rgb(255 255 255 / 30%);
+    background: rgb(20 15 8 / 38%);
+    color: #fff;
+    backdrop-filter: blur(6px);
+  }
+
+  .slimsearch-key {
+    border-color: rgb(255 255 255 / 26%);
+    background: rgb(255 255 255 / 8%);
+    box-shadow: none;
+    color: #fff;
+  }
+
+  .vp-navbar .vp-action-link {
+    color: rgb(255 255 255 / 78%);
+
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+
+.vp-navbar .vp-action-link {
+  color: var(--vp-c-text-mute);
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--vp-c-accent);
+  }
+}
+
+.slimsearch-button {
+  height: 1.9rem;
+  padding: 0 0.55rem;
+  border: 1px solid var(--z-hairline);
+  border-radius: var(--z-radius);
+  background: transparent;
+  color: var(--vp-c-text-mute);
+  font-family: var(--vp-font-mono);
+  font-size: 0.72rem;
+
+  &:hover {
+    border-color: var(--vp-c-accent);
+    background: var(--vp-c-bg-alt);
+  }
+}
+
+.slimsearch-placeholder {
+  font-family: var(--vp-font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+
+.slimsearch-key {
+  border-color: var(--z-hairline);
+  background: var(--vp-c-bg-alt);
+  box-shadow: none;
+}
+
+// ---------------------------------------------------------------------------
+// Sidebar — flat paper column, yellow active entry.
+// ---------------------------------------------------------------------------
+.vp-sidebar {
+  border-inline-end: 1px solid var(--z-hairline);
+  box-shadow: none;
+  background: var(--vp-c-bg);
+  font-size: 0.9rem;
+}
+
+.vp-sidebar > .vp-sidebar-links {
+  padding: 1.25rem 0;
+}
+
+.vp-sidebar-link {
+  width: calc(100% - 0.5rem);
+  margin-inline: 0.25rem;
+  padding: 0.38rem 0.6rem;
+  border-radius: var(--z-radius);
+  color: var(--vp-c-text-mute);
+  font-size: 0.92rem;
+
+  &:hover {
+    background: var(--z-yellow-soft);
+    color: var(--vp-c-text);
+  }
+
+  &.active {
+    background: var(--z-chip-bg);
+    color: var(--z-ink);
+    font-weight: 600;
+
+    .vp-icon {
+      color: var(--z-ink);
+    }
+  }
+}
+
+.vp-sidebar-header {
+  border-radius: var(--z-radius);
+  color: var(--vp-c-text);
+  font-family: var(--vp-font);
+  font-size: 0.92rem;
+  font-weight: 600;
+
+  .vp-icon {
+    color: var(--vp-c-text-mute);
+  }
+
+  &.clickable:hover {
+    background: var(--z-yellow-soft);
+  }
+
+  &.clickable.exact {
+    border-inline-start-color: transparent;
+    color: var(--vp-c-text);
+  }
+}
+
+.vp-sidebar-header .vp-arrow {
+  font-size: 1.1em;
+}
+
+.vp-sidebar-group {
+  margin-top: 0.15rem;
+}
+
+.vp-sidebar-links .vp-sidebar-links {
+  margin-block-start: 0.15rem;
+}
+
+// ---------------------------------------------------------------------------
+// Footer — a thin running-time strip, not a second content block.
+// ---------------------------------------------------------------------------
+.vp-footer-wrapper {
+  border-top: 1px solid var(--z-hairline);
+  background: transparent;
+  color: var(--vp-c-text-mute);
+  padding-block: 1.35rem;
+
+  line-height: 1.7;
+}
+
+.vp-footer,
+.vp-copyright {
+  font-family: var(--vp-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.vp-page:not(.not-found) + .vp-footer-wrapper {
+  margin-top: 0;
+}
+
+// ---------------------------------------------------------------------------
+// Home profile card & info switcher
+// ---------------------------------------------------------------------------
+.vp-blog-info-wrapper .vp-blogger-info {
+  border: 1px solid var(--z-hairline);
+  border-radius: 0;
+  box-shadow: none;
+  background: var(--vp-c-bg-elv);
+
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+.vp-blogger {
+  padding: 1rem 0.5rem 0.5rem;
+}
+
+.vp-blogger-avatar {
+  width: 84px;
+  height: 84px;
+  border: 1px solid var(--z-hairline);
+  border-radius: 50%;
+  background: #fff;
+}
+
+.vp-blogger-name {
+  margin: 0.8rem auto 0.35rem;
+  color: var(--vp-c-text);
+  font-family: var(--vp-font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.vp-blogger-description {
+  margin: 0.35rem auto 0.9rem;
+  color: var(--vp-c-text-mute);
+  font-family: var(--vp-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.vp-blog-counts {
+  width: 100%;
+  padding: 0.9rem 0.25rem 0.4rem;
+  border-top: 1px solid var(--z-hairline);
+}
+
+.vp-blog-count {
+  color: var(--vp-c-text-mute);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+
+  .count {
+    margin-bottom: 0.35rem;
+    color: var(--vp-c-text);
+    font-family: var(--vp-font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  &:hover {
+    color: var(--vp-c-accent);
+  }
+}
+
+.vp-social-media {
+  width: 22px;
+  height: 22px;
+}
+
+.vp-blog-infos {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--z-hairline);
+  border-radius: 0;
+  background: var(--vp-c-bg-elv);
+  box-shadow: none;
+
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+.vp-blog-type-button {
+  width: 38px;
+  height: 38px;
+  margin: 0 5px;
+}
+
+.vp-blog-type-icon-wrapper {
+  width: 18px;
+  height: 18px;
+  padding: 6px;
+  border-radius: 0;
+  background: transparent;
+  color: var(--vp-c-text-mute);
+
+  &:hover {
+    background: var(--z-yellow-soft);
+  }
+
+  &.active {
+    background: var(--z-yellow);
+    color: var(--z-ink);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Blog category / tag lists (home info panel + map pages)
+// ---------------------------------------------------------------------------
+.vp-category-list,
+.vp-tag-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vp-category {
+  border-radius: var(--z-radius);
+  color: var(--vp-c-text);
+  font-size: 12.5px;
+
+  &:hover {
+    background: var(--z-yellow-soft);
+  }
+
+  .vp-category-count {
+    border-radius: 0;
+    background: var(--z-chip-bg);
+    color: var(--z-ink);
+    font-family: var(--vp-font-mono);
+    font-size: 10px;
+    font-weight: 600;
+  }
+}
+
+[data-theme="dark"] .vp-category .vp-category-count {
+  color: var(--z-ink);
+}
+
+.vp-tag {
+  border: 1px solid var(--z-hairline);
+  border-radius: var(--z-radius);
+  background: transparent;
+  box-shadow: none;
+  color: var(--vp-c-text-mute);
+  font-size: 11px;
+
+  &:hover {
+    background: var(--z-yellow-soft);
+    box-shadow: none;
+  }
+
+  &.active {
+    transform: none;
+    border-color: var(--z-yellow);
+    box-shadow: none;
+  }
+}
+
+
+// Star articles in the home info panel
+.vp-star-article-wrapper .title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+
+  color: var(--vp-c-text-mute);
+  font-family: var(--vp-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.vp-star-article-wrapper .title .icon {
+  color: var(--vp-c-text-subtle);
+}
+
+.vp-star-article-wrapper .title .num {
+  color: var(--vp-c-text);
+  font-family: var(--vp-font-heading);
+  font-size: 1.2rem;
+  letter-spacing: 0;
+}
+
+.vp-star-articles {
+  padding: 0.35rem 0 0;
+  line-height: 2;
+}
+
+.vp-star-article {
+  border-bottom: 1px dashed var(--z-hairline);
+
+  a {
+    color: var(--vp-c-text-mute);
+    font-size: 12.5px;
+  }
+
+  &:hover a {
+    color: var(--vp-c-text);
+  }
+}
+
+
+// The starred list is clearer without the duplicated total count.
+.vp-star-article-wrapper > .title {
+  display: none;
+}
+
+.vp-star-article-wrapper > hr {
+  display: none;
+}
+
+.vp-star-article-wrapper::before {
+  content: "星标文章 / STARRED";
+
+  display: block;
+
+  margin-bottom: 0.65rem;
+
+  color: var(--vp-c-text-subtle);
+  font-family: var(--vp-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+.vp-star-articles {
+  margin: 0;
+}
+
+
+// On pages without a sidebar the left (sidebar) hamburger would duplicate the
+// right (nav screen) hamburger on mobile.
+.theme-container.no-sidebar .vp-toggle-sidebar-button {
+  display: none;
+}
+
+
+// Between the tablet and desktop breakpoints the 12 top-level links no longer
+// fit; use the existing nav screen instead of squeezing them.
+@media (max-width: 1100px) {
+  .vp-navbar .vp-nav-links {
+    display: none;
+  }
+
+  .vp-toggle-navbar-button {
+    display: flex;
+  }
+
+  .vp-nav-screen {
+    display: block;
+  }
+
+  .nav-screen-links {
+    display: block;
+  }
+}
+
+.vp-nav-screen {
+  .navbar-links-item {
+    border-bottom-color: var(--z-hairline);
+  }
+
+  .auto-link {
+    color: var(--vp-c-text);
+  }
+
+  .auto-link.route-link-active {
+    color: var(--vp-c-text);
+    font-weight: 600;
+  }
+}
+
+.full-screen-title {
+  color: var(--vp-c-text-mute);
+  font-family: var(--vp-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+
+// Tablets and small laptops: keep the article column and sidebar inside the
+// viewport instead of letting the 780px column run under the edge.
+@media (max-width: 1200px) {
+  #app {
+    --sidebar-width: 15rem;
+    --content-width: 640px;
+  }
+}
+
+
+// The blog list pages have no sidebar; the left hamburger would be dead weight
+// and visually duplicate the site menu on the right.
+body:has(.vp-page.vp-blog-home) .vp-toggle-sidebar-button,
+body:has(.vp-page.vp-blog) .vp-toggle-sidebar-button {
+  display: none;
+}

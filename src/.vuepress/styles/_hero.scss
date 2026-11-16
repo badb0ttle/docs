@@ -1,0 +1,363 @@
+// ---------------------------------------------------------------------------
+// Blog hero — a bottom-left editorial masthead over the Kessoku poster.
+// ---------------------------------------------------------------------------
+.vp-blog-hero {
+  align-items: stretch;
+  justify-content: flex-end;
+
+  margin-bottom: 0;
+  padding: 0;
+
+  color: #fff;
+  font-family: var(--vp-font);
+  text-align: start;
+  background: #14120f;
+
+  &.hero-fullscreen {
+    height: 100svh;
+    min-height: 620px;
+  }
+
+  // The duck now sits in the masthead instead of floating in the middle.
+  > .vp-blog-hero-image {
+    display: none;
+  }
+
+  .vp-hero-slide-down-button {
+    display: none;
+  }
+
+  .vp-blog-mask::after {
+    background:
+      linear-gradient(
+        180deg,
+        rgb(16 13 9 / 66%) 0%,
+        rgb(16 13 9 / 34%) 13%,
+        rgb(16 13 9 / 0%) 33%
+      ),
+      linear-gradient(
+        0deg,
+        rgb(16 13 9 / 94%) 0%,
+        rgb(16 13 9 / 64%) 27%,
+        rgb(16 13 9 / 0%) 62%
+      );
+  }
+}
+
+// The transparent-navbar preset injects a 100vh hero at runtime. Show a sliver
+// of the section index in the first screen while keeping the poster immersive.
+body .vp-blog-hero.hero-fullscreen {
+  height: 86svh;
+  min-height: 620px;
+}
+
+@media (max-width: 719px) {
+  body .vp-blog-hero.hero-fullscreen {
+    min-height: 560px;
+  }
+}
+
+.zine-hero {
+  position: relative;
+
+  box-sizing: border-box;
+
+  width: 100%;
+  padding-inline: var(--z-home-gutter);
+  padding-bottom: clamp(4rem, 10vh, 7rem);
+  text-shadow: 0 1px 24px rgb(0 0 0 / 18%);
+
+  @media (max-width: 719px) {
+    padding-inline: 1.5rem;
+    padding-bottom: 3rem;
+  }
+}
+
+.zine-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  margin: 0 0 1.5rem;
+
+  color: rgb(255 255 255 / 76%);
+  font-family: var(--vp-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.zine-eyebrow-avatar {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgb(255 255 255 / 55%);
+  border-radius: 50%;
+  background: #fff;
+  object-fit: cover;
+}
+
+.zine-eyebrow-name {
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.zine-eyebrow-sep {
+  opacity: 0.42;
+}
+
+.zine-eyebrow-meta {
+  color: rgb(255 255 255 / 56%);
+}
+
+.zine-title {
+  margin: 0;
+
+  color: #fff;
+  font-family: var(--vp-font);
+  font-size: clamp(3.25rem, 7.2vw, 6.5rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
+.zine-tagline {
+  margin: 0.45rem 0 0;
+
+  color: #fff;
+  font-family: var(--vp-font-heading);
+  font-size: clamp(1.05rem, 1.4vw, 1.4rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.zine-quote {
+  max-width: 34rem;
+  min-height: 4.1rem;
+  margin: 1.6rem 0 0;
+  padding: 0.15rem 0 0.15rem 1rem;
+  border-inline-start: 3px solid var(--z-yellow);
+}
+
+.zine-quote-text {
+  margin: 0;
+
+  color: rgb(255 255 255 / 90%);
+  font-family: var(--vp-font);
+  font-size: clamp(0.92rem, 1.1vw, 1.02rem);
+  font-weight: 400;
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+
+.zine-quote-author {
+  display: block;
+  margin-top: 0.4rem;
+
+  color: rgb(255 255 255 / 58%);
+  font-family: var(--vp-font-mono);
+  font-size: 11px;
+  font-style: normal;
+  letter-spacing: 0.08em;
+  text-align: end;
+
+  opacity: 0;
+  transition: opacity 0.35s ease;
+
+  &.is-visible {
+    opacity: 1;
+  }
+}
+
+.zine-caret {
+  display: inline-block;
+
+  margin-inline-start: 0.08em;
+
+  color: var(--z-yellow);
+
+  animation: zine-caret-blink 0.85s step-end infinite;
+}
+
+@keyframes zine-caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zine-caret {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+.zine-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+
+  margin-top: 2rem;
+}
+
+.zine-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  text-shadow: none;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+
+  span {
+    font-family: var(--vp-font-mono);
+    font-weight: 400;
+  }
+}
+
+.zine-action--primary {
+  padding: 0.72rem 1.1rem;
+  border: 1px solid var(--z-yellow);
+  background: var(--z-yellow);
+  color: var(--z-ink);
+
+  &:hover {
+    border-color: #fff;
+    background: #fff;
+    transform: translateY(-2px);
+  }
+}
+
+.zine-action--ghost {
+  padding: 0.72rem 0.1rem;
+  border-bottom: 1px solid rgb(255 255 255 / 42%);
+
+  &:hover {
+    border-color: var(--z-yellow);
+    color: var(--z-yellow);
+  }
+}
+
+@media (max-width: 719px) {
+  .vp-blog-hero.hero-fullscreen {
+    min-height: 560px;
+  }
+
+  .zine-eyebrow {
+    gap: 0.45rem;
+    margin-bottom: 1.1rem;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+
+  .zine-eyebrow-avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .zine-title {
+    font-size: clamp(2.9rem, 16vw, 4.4rem);
+  }
+
+  .zine-tagline {
+    font-size: 1.05rem;
+  }
+
+  .zine-quote {
+    min-height: 4.4rem;
+    margin-top: 1.2rem;
+  }
+
+  .zine-actions {
+    margin-top: 1.5rem;
+  }
+}
+
+// Latest article shortcut inside the hero: the first article is reachable
+// without scrolling past the poster.
+.zine-latest {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.75rem;
+
+  max-width: 48rem;
+  margin-top: 1.6rem;
+  padding-top: 0.9rem;
+
+  border-top: 1px solid rgb(255 255 255 / 22%);
+  color: #fff;
+  text-decoration: none;
+
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: var(--z-yellow);
+  }
+}
+
+.zine-latest-label {
+  color: rgb(255 255 255 / 55%);
+  font-family: var(--vp-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+
+.zine-latest-title {
+  color: #fff;
+  font-family: var(--vp-font-heading);
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.4;
+  text-wrap: pretty;
+
+  transition: color 0.2s ease;
+}
+
+.zine-latest-meta {
+  color: rgb(255 255 255 / 55%);
+  font-family: var(--vp-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.03em;
+}
+
+.zine-latest-arrow {
+  margin-inline-start: auto;
+  color: var(--z-yellow);
+  font-family: var(--vp-font-mono);
+}
+
+.zine-latest:hover .zine-latest-title {
+  color: var(--z-yellow);
+}
+
+@media (max-width: 719px) {
+  .zine-latest {
+    margin-top: 1.35rem;
+    padding-top: 0.75rem;
+  }
+
+  .zine-latest-title {
+    flex-basis: 100%;
+    font-size: 0.98rem;
+  }
+
+  .zine-latest-arrow {
+    display: none;
+  }
+}

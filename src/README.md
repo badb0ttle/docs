@@ -1,55 +1,13 @@
 ---
 home: true
 layout: Blog
-title: Home
+title: 首页
 heroImage: /gogo.gif
 heroText: ✌︎(ツ)ɔ
 editLink: false
 heroFullScreen: true
 tagline:
 bgImage: 'bgImg.png'
-projects:
-  - icon: calculator
-    name: Algorithm
-    desc: Algorithm & Data Structure
-    link: /Algorithm/
-    
-  - icon: server
-    name: Backend
-    desc: Java, SpringBoot, Architecture
-    link: /Backend/
-
-  - icon: code
-    name: Frontend
-    desc: Vue, React, Web
-    link: /Frontend/
-
-  - icon: database
-    name: Database
-    desc: MySQL, Redis, Storage
-    link: /Database/
-
-  - icon: linux
-    name: DevOps
-    desc: Docker, Network, Deploy
-    link: /DevOps/
-
-  - icon: code
-    name: Languages
-    desc: Shell, Python, Go
-    link: /Languages/
-
-  - icon: terminal
-    name: Linux
-    desc: System & Commands
-    link: /Linux/
-
-  - icon: tools
-    name: Tools
-    desc: Efficiency & Utilities
-    link: /Tools/
-
-footer: XP
 ---
 
 

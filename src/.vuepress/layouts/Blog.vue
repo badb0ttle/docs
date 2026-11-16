@@ -1,14 +1,19 @@
 <script setup lang="ts">
 import { Blog } from "vuepress-theme-hope/blog";
-import HitokotoBlogHero from "vuepress-theme-hope/presets/HitokotoBlogHero.js";
+import CategoryIndex from "../components/CategoryIndex.vue";
+import ZineHero from "../components/ZineHero.vue";
 </script>
 
 <template>
   <Blog>
     <template #heroInfo="data">
       <ClientOnly>
-        <HitokotoBlogHero v-bind="data" />
+        <ZineHero v-bind="data" />
       </ClientOnly>
+    </template>
+
+    <template #articlesBefore>
+      <CategoryIndex />
     </template>
   </Blog>
 </template>
