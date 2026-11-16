@@ -1,2 +1,86 @@
-// you can change colors here
-$vp-font: '"Funnel Display", serif';
+// ---------------------------------------------------------------------------
+// Typography
+// 展示字（拉丁）= Funnel Display；中文正文走系统黑体，中文标题走宋体。
+// ---------------------------------------------------------------------------
+$vp-font: '"Funnel Display", -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif';
+$vp-font-heading: '"Funnel Display", "Noto Serif SC", "Songti SC", "Source Han Serif SC", "SimSun", serif';
+$content-width: 640px;
+
+$vp-font-mono: '"SFMono-Regular", "JetBrains Mono", "Menlo", "Consolas", "Liberation Mono", monospace';
+
+// ---------------------------------------------------------------------------
+// Paper & ink palette
+// 暖纸、墨色、Kessoku 黄。青色只做功能强调（链接 / 选中 / 焦点）。
+// ---------------------------------------------------------------------------
+$vp-c-bg: (
+  light: #f7f3e9,
+  dark: #14120f,
+);
+$vp-c-bg-alt: (
+  light: #efe9dc,
+  dark: #0f0d0b,
+);
+$vp-c-bg-elv: (
+  light: #fffdf7,
+  dark: #1c1915,
+);
+
+$vp-c-text: (
+  light: #1d1a15,
+  dark: #ece6d8,
+);
+$vp-c-text-mute: (
+  light: rgba(29, 26, 21, 0.66),
+  dark: rgba(236, 230, 216, 0.72),
+);
+$vp-c-text-subtle: (
+  light: rgba(29, 26, 21, 0.44),
+  dark: rgba(236, 230, 216, 0.46),
+);
+
+$vp-c-border: (
+  light: #d7cdb9,
+  dark: #3a342b,
+);
+$vp-c-border-hard: (
+  light: #c4b89f,
+  dark: #4a4338,
+);
+$vp-c-divider: (
+  light: #e3dbc9,
+  dark: #2b2721,
+);
+$vp-c-shadow: (
+  light: rgba(52, 42, 24, 0.1),
+  dark: rgba(0, 0, 0, 0.45),
+);
+$vp-c-control: (
+  light: rgba(52, 42, 24, 0.055),
+  dark: rgba(236, 230, 216, 0.07),
+);
+$vp-c-control-hover: (
+  light: rgba(52, 42, 24, 0.1),
+  dark: rgba(236, 230, 216, 0.12),
+);
+
+// ---------------------------------------------------------------------------
+// Accent — deep teal for links/buttons, with readable contrast on paper.
+// (The theme derives these from $theme-color; we pin them explicitly.)
+// ---------------------------------------------------------------------------
+$vp-c-accent: (
+  light: #0a4a45,
+  dark: #7fded5,
+);
+$vp-c-accent-bg: (
+  light: #0f5c56,
+  dark: #12645d,
+);
+$vp-c-accent-hover: (
+  light: #0d625b,
+  dark: #a2eee7,
+);
+$vp-c-accent-soft: (
+  light: rgba(15, 92, 86, 0.11),
+  dark: rgba(127, 222, 213, 0.15),
+);
+$vp-c-accent-text: var(--vp-c-white);

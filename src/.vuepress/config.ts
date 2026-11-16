@@ -14,29 +14,27 @@ export default defineUserConfig({
 
   theme,
 
-  // 配置 favicon.ico 路径
   head: [
-    //     // <link rel="preconnect" href="https://fonts.googleapis.com">
-    // <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    // <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     ["link", { rel: "preconnect", href: "https://fonts.googleapis.com" }],
     [
       "link",
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" },
     ],
+    ["link", { rel: "preconnect", href: "https://v1.hitokoto.cn" }],
     [
       "link",
       {
-        href: "https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Limelight&display=swap",
         rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Noto+Serif+SC:wght@600;700&display=swap",
       },
     ],
-    ['link', { rel: 'icon', href: 'assets/icon/logo.ico' }]
+    ["link", { rel: "icon", href: "/assets/icon/logo.ico" }],
+    ["meta", { name: "theme-color", content: "#f7f3e9" }],
+    [
+      "meta",
+      { name: "theme-color", media: "(prefers-color-scheme: dark)", content: "#14120f" },
+    ],
   ],
-
-
-  // 和 PWA 一起启用
-  // shouldPrefetch: false,
 
   bundler: viteBundler({}),
 });

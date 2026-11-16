@@ -1,2 +1,19 @@
 // you can change config here
-$theme-color: #096dd9;
+
+// Functional accent (links, active nav, buttons). Kessoku yellow is decorative
+// only and lives in styles/index.scss as --z-yellow.
+$theme-color: #0f5c56;
+
+// Muted deep hues for category / tag tokens. Most surfaces stay paper + ink;
+// these are only used for small labels and section tints.
+$colors: #a33a2a, #b4621a, #8a6a00, #2f6b4f, #0f5c56, #1e5a8a, #5b3f8c, #8c2f5e, #6b4a2f;
+
+// Code blocks: warm paper, never neon.
+$code-color: (
+  light: #232019,
+  dark: #e8e2d4,
+);
+$code-bg-color: (
+  light: #eee7d8,
+  dark: #1c1915,
+);

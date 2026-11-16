@@ -5,7 +5,7 @@ import sidebar from "./sidebar.js";
 
 export default hopeTheme({
   hostname: "https://badb0ttle.github.io",
-  darkmode:"auto",
+  darkmode:"switch",
   author: {
     name: "ℬ𝒶𝒹𝒷0𝓉𝓉𝓁ℯ",
     url: "https://github.com/badb0ttle",
@@ -18,7 +18,7 @@ export default hopeTheme({
   contributors: false,
   navbar,
   sidebar,
-  footer: "hehehe",
+  footer: "Blnk is infinite.",
   displayFooter: true,
   encrypt: {
     config: {
@@ -38,7 +38,7 @@ export default hopeTheme({
       Steam: "https://steamcommunity.com/profiles/76561198406594357",
       Bilibili:"https://space.bilibili.com/187724779",
     },
-    articleInfo:["Author", "Original", "Date", "PageView", "Category", "Tag", "ReadingTime"],
+    articleInfo: ["Date", "Category", "Tag", "ReadingTime"],
   },
   markdown: {
     math: {
@@ -75,7 +75,9 @@ export default hopeTheme({
   },
 
   plugins: {
-    blog: true,
+    blog: {
+      excerptLength: 200,
+    },
     icon: {
       assets: "fontawesome",
     },
