@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from "vue";
-import { RouteLink, withBase } from "vuepress/client";
+import { RouteLink, usePageFrontmatter, withBase } from "vuepress/client";
 import { useArticles } from "vuepress-theme-hope/blog";
+import { getAuthorStatus } from "./authorStatus.js";
 
 defineProps<{
   text: string;
@@ -17,6 +18,8 @@ const FALLBACK = {
 const quote = ref(FALLBACK.text);
 const source = ref(FALLBACK.from);
 const display = ref("");
+const frontmatter = usePageFrontmatter<{ authorStatus?: unknown }>();
+const authorStatus = computed(() => getAuthorStatus(frontmatter.value.authorStatus));
 
 let isMounted = false;
 let typeTimer: number | undefined;
@@ -170,6 +173,28 @@ onUnmounted(() => {
         更新日志
         <span aria-hidden="true">→</span>
       </a>
+      <div
+        v-if="authorStatus"
+        class="zine-author-status"
+        :data-state="frontmatter.authorStatus"
+      >
+        <picture class="zine-author-status-art">
+          <source
+            media="(prefers-reduced-motion: reduce)"
+            :srcset="withBase(authorStatus.still)"
+          />
+          <img
+            :src="withBase(authorStatus.animation)"
+            width="80"
+            height="70"
+            alt=""
+          />
+        </picture>
+        <div class="zine-author-status-bubble">
+          <strong>{{ authorStatus.label }}</strong>
+          <span>{{ authorStatus.message }}</span>
+        </div>
+      </div>
     </div>
 
     <RouteLink v-if="latest" class="zine-latest" :to="latest.path">

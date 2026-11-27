@@ -8,6 +8,8 @@ editLink: false
 heroFullScreen: true
 tagline:
 bgImage: 'bgImg.png'
+# 站长状态可选 work（施工中）或 rest（休息中）。
+authorStatus: work
 ---
 
 
